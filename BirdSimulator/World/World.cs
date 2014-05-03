@@ -1,14 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using OpenTK;
 
 namespace BirdSimulator.World
 {
     public class World
     {
-        public IEnumerable<Bird.Bird> Birds;
+        public int RenderFps { get; set; }
+        public Vector2 WindowResolution { get; set; }
+        public Vector3 WorldScale { get; set; }
+        public Vector3 WorldSize { get; set; }
+        public float RotationAngle { get; set; }
 
-        public World(IEnumerable<Bird.Bird> birds)
+        public World(int renderFps, Vector2 windowResolution, float worldScale, float worldSize, float rotationAngle)
         {
-            Birds = birds;
+            RenderFps = renderFps;
+            WindowResolution = windowResolution;
+            WorldScale = new Vector3(worldScale);
+            WorldSize = new Vector3(worldSize);
+            RotationAngle = rotationAngle;
         }
     }
 }

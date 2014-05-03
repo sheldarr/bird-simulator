@@ -1,52 +1,53 @@
-﻿using System.Collections.Generic;
-using BirdSimulator.Bird;
-using BirdSimulator.Strategies;
-using BirdSimulator.Time;
+﻿using System;
+using BirdSimulator.ConfigurationLoader;
+using BirdSimulator.DebugLog;
 using BirdSimulator.Observer;
-using BirdSimulator.World;
 using GraphicsEngine.Scene;
-using OpenTK;
 
 namespace GraphicsEngine
 {
     class Program
     {
-        private static int x;
-        private static int y;
-        private static int z;
-        private static float zoom = 1;
-
-        public static List<Vector3> Objects = new List<Vector3>();
-
         static void Main(string[] args)
         {
-            var observer = new Observer();
-            var timeMachine = new TimeMachine(100);
+            DebugLog.AddDateTime = true;
+            DebugLog.WriteLine("Program start");
+            DebugLog.WriteLine("Loading configuration.xml");
 
-            var slowStatistics = new Statistics(0.001f);
-            var fastStatistics = new Statistics(0.005f);
-            var linearFlightUp = new VectorFlight(new Vector3(1, 1, 1));
-            var linearFlightDown = new VectorFlight(new Vector3(-1, -1, -1));
-
-            var birds = new List<Bird>
-            { 
-                new Bird(new Vector3(0, 0, 0), slowStatistics, linearFlightUp), 
-                new Bird(new Vector3(0, 0, 0), slowStatistics, linearFlightDown), 
-                new Bird(new Vector3(0.1f, 0.1f, 0.1f), fastStatistics, linearFlightUp),
-                new Bird(new Vector3(0.1f, 0.1f, 0.1f), fastStatistics, linearFlightDown)
-            };
-
-            birds.ForEach(observer.Subscribe);
-            birds.ForEach(timeMachine.AddTraveler); 
-
-            timeMachine.Enabled = true;
-
-            var world = new World(birds);
-            var worldConfig = new WorldConfiguration(60, 0.5f, 0.75f, 1.0f);
-            using (var simulationScene = new WorldScene(world, worldConfig))
+            try
             {
-                simulationScene.StartRendering();
-            }          
+                var configurationLoader = new ConfigurationLoader("configuration.xml");
+                var world = configurationLoader.LoadWorld();
+                var timeMachine = configurationLoader.LoadTimeMachine();
+                var birds = configurationLoader.LoadBirds();
+
+                DebugLog.WriteLine("Configuration loaded");
+
+                var observer = new Observer();
+
+                foreach (var bird in birds)
+                {
+                    observer.Subscribe(bird);
+                    timeMachine.AddTraveler(bird);
+                } 
+
+                timeMachine.Enabled = true;
+
+                using (var simulationScene = new WorldScene(world, birds))
+                {
+                    DebugLog.WriteLine("Start rendering");
+                    simulationScene.StartRendering();
+                }
+
+                DebugLog.WriteLine("Program end");
+            }
+            catch (Exception e)
+            {
+                DebugLog.WriteLine("Program abort");
+                DebugLog.WriteLine(e.ToString());
+            }
+
+            DebugLog.SaveLog();
         }
     }
 }

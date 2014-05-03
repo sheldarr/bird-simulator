@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using BirdSimulator.Bird;
 using BirdSimulator.World;
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
@@ -9,16 +12,17 @@ namespace GraphicsEngine.Scene
 {
     public class WorldScene : IDisposable
     {
-        private GameWindow _scene = new GameWindow(1024, 768);
+        private GameWindow _scene;
         private World _world;
-        private WorldConfiguration _worldConfiguration;
+        private IList<Bird> _birds; 
         private Vector3 _rotation = new Vector3(0, 0 ,0);
         
 
-        public WorldScene(World world, WorldConfiguration worldConfiguration)
+        public WorldScene(World world, IList<Bird> birds)
         {
             _world = world;
-            _worldConfiguration = worldConfiguration;
+            _birds = birds;
+            _scene = new GameWindow(Convert.ToInt32(_world.WindowResolution.X), Convert.ToInt32(_world.WindowResolution.Y), GraphicsMode.Default, "Bird Simulator");
             _scene.Load += Load;
             _scene.Resize += Resize;
             _scene.UpdateFrame += UpdateFrame;
@@ -27,7 +31,7 @@ namespace GraphicsEngine.Scene
 
         public void StartRendering()
         {
-            _scene.Run(_worldConfiguration.RenderFps);
+            _scene.Run(_world.RenderFps);
         }
 
         public void Dispose()
@@ -37,8 +41,8 @@ namespace GraphicsEngine.Scene
 
         private void Load(object sender, EventArgs e)
         {
-            GL.Enable(EnableCap.DepthTest);
             _scene.VSync = VSyncMode.On;
+            GL.Enable(EnableCap.DepthTest);
         }
 
         private void Resize(object sender, EventArgs e)
@@ -54,37 +58,47 @@ namespace GraphicsEngine.Scene
             }
             if (_scene.Keyboard[Key.W])
             {
-                _rotation.X += _worldConfiguration.RotationAngle;
+                _rotation.X += _world.RotationAngle;
             }
             if (_scene.Keyboard[Key.S])
             {
-                _rotation.X -= _worldConfiguration.RotationAngle;
+                _rotation.X -= _world.RotationAngle;
             }
             if (_scene.Keyboard[Key.A])
             {
-                _rotation.Y += _worldConfiguration.RotationAngle;
+                _rotation.Y += _world.RotationAngle;
             }
             if (_scene.Keyboard[Key.D])
             {
-                _rotation.Y -= _worldConfiguration.RotationAngle;
+                _rotation.Y -= _world.RotationAngle;
             }
             if (_scene.Keyboard[Key.Q])
             {
-                _rotation.Z += _worldConfiguration.RotationAngle;
+                _rotation.Z += _world.RotationAngle;
             }
             if (_scene.Keyboard[Key.E])
             {
-                _rotation.Z -= _worldConfiguration.RotationAngle;
+                _rotation.Z -= _world.RotationAngle;
+            }
+            if (_scene.Keyboard[Key.O])
+            {
+                _world.WorldScale = Vector3.Subtract(_world.WorldScale, new Vector3(0.01f));
+            }
+            if (_scene.Keyboard[Key.P])
+            {
+                _world.WorldScale = Vector3.Add(_world.WorldScale, new Vector3(0.01f));
             }
         }
 
         private void RenderFrame(object sender, FrameEventArgs e)
-        {
+        {   
             InitNextFrame();
             PerformTransformations();
             RenderWorldEdges();
             RenderObjects();
             
+
+
             _scene.SwapBuffers();
         }
 
@@ -92,9 +106,19 @@ namespace GraphicsEngine.Scene
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-            GL.MatrixMode(MatrixMode.Projection);
+
+            var cameraPos = new Vector3(1, 0, 1);
+            var cameraTarget = new Vector3(0, 0, 0);
+            var cameraUp = new Vector3(0, 1, 0);
+            var lookat = Matrix4.LookAt(cameraPos, cameraTarget, cameraUp);
+            GL.MatrixMode(MatrixMode.Modelview);
             GL.LoadIdentity();
-            
+            GL.LoadMatrix(ref lookat);
+
+            GL.MatrixMode(MatrixMode.Projection);
+            //GL.Frustum(0, 0, 1024, 768, 0, 1000);
+
+            GL.LoadIdentity();
         }
 
         private void PerformTransformations()
@@ -102,7 +126,7 @@ namespace GraphicsEngine.Scene
             GL.Rotate(_rotation.X, 1, 0, 0);
             GL.Rotate(_rotation.Y, 0, 1, 0);
             GL.Rotate(_rotation.Z, 0, 0, 1);
-            GL.Scale(_worldConfiguration.WorldScale);
+            GL.Scale(_world.WorldScale);
         }
 
         private void RenderWorldEdges()
@@ -167,14 +191,76 @@ namespace GraphicsEngine.Scene
             GL.Vertex3(0.75, -0.75, -0.75);
             GL.Vertex3(-0.75, -0.75, -0.75);
 
-            GL.End();     
+            GL.End();
+
+            GL.Color3(Color.Red);
+
+            GL.Begin(PrimitiveType.LineStrip);
+
+            GL.Vertex3(-640, 640, -640);
+            GL.Vertex3(640, 640, -640);
+            GL.Vertex3(640, -640, -640);
+            GL.Vertex3(-640, -640, -640);
+            GL.Vertex3(-640, 640, -640);
+
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineStrip);
+
+            GL.Vertex3(-640, 640, 640);
+            GL.Vertex3(640, 640, 640);
+            GL.Vertex3(640, -640, 640);
+            GL.Vertex3(-640, -640, 640);
+            GL.Vertex3(-640, 640, 640);
+
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineStrip);
+
+            GL.Vertex3(-640, 640, 640);
+            GL.Vertex3(640, 640, 640);
+            GL.Vertex3(640, 640, -640);
+            GL.Vertex3(-640, 640, -640);
+            GL.Vertex3(-640, 640, 640);
+
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineStrip);
+
+            GL.Vertex3(640, -640, 640);
+            GL.Vertex3(640, 640, 640);
+            GL.Vertex3(640, 640, -640);
+            GL.Vertex3(640, -640, -640);
+            GL.Vertex3(640, -640, 640);
+
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineStrip);
+
+            GL.Vertex3(-640, -640, 640);
+            GL.Vertex3(-640, 640, 640);
+            GL.Vertex3(-640, 640, -640);
+            GL.Vertex3(-640, -640, -640);
+            GL.Vertex3(-640, -640, 640);
+
+            GL.End();
+
+            GL.Begin(PrimitiveType.LineStrip);
+
+            GL.Vertex3(-640, -640, 640);
+            GL.Vertex3(640, -640, 640);
+            GL.Vertex3(640, -640, -640);
+            GL.Vertex3(-640, -640, -640);
+            GL.Vertex3(-640, -640, 640);
+
+            GL.End();
         }
 
         private void RenderObjects()
         {
-            GL.Color3(Color.Yellow);
+            GL.Color3(Color.Cyan);
 
-            foreach (var bird in _world.Birds)
+            foreach (var bird in _birds)
             {
                 GL.Begin(PrimitiveType.Points);
 

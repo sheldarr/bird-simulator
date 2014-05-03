@@ -50,18 +50,27 @@
   <ItemGroup>
     <Compile Include="Bird\Bird.cs" />
     <Compile Include="Bird\Statistics.cs" />
+    <Compile Include="ConfigurationLoader\ConfigurationLoader.cs" />
+    <Compile Include="ConfigurationLoader\IConfigurationLoader.cs" />
+    <Compile Include="DebugLog\DebugLog.cs" />
     <Compile Include="ExternalConditions\Fog.cs" />
     <Compile Include="ExternalConditions\Wind.cs" />
+    <Compile Include="Factories\BirdFactory.cs" />
+    <Compile Include="Factories\StatisticsFactory.cs" />
+    <Compile Include="Factories\StrategyFactory.cs" />
+    <Compile Include="Factories\TimeMachineFactory.cs" />
+    <Compile Include="Factories\WorldFactory.cs" />
     <Compile Include="Interfaces\IEnvironmentalCondition.cs" />
     <Compile Include="Interfaces\IExternalCondition.cs" />
     <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Interfaces\ITimeTraveler.cs" />
     <Compile Include="Observer\Observer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\NoStrategy.cs" />
+    <Compile Include="Strategies\Strategies.cs" />
     <Compile Include="Strategies\VectorFlight.cs" />
     <Compile Include="Time\TimeMachine.cs" />
     <Compile Include="World\World.cs" />
-    <Compile Include="World\WorldConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EnvironmentalConditions\" />
