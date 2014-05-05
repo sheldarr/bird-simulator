@@ -1,0 +1,143 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.Remoting.Messaging;
+using System.Xml.Linq;
+using System.Xml.XPath;
+using BirdSimulator.Factories;
+using BirdSimulator.Time;
+using OpenTK;
+
+namespace BirdSimulator.ConfigurationLoader 
+{
+    public class ConfigurationLoader : IConfigurationLoader
+    {
+        private readonly XElement _configurationDocument;
+
+        public ConfigurationLoader(string configurationPath)
+        {
+            try
+            {
+                _configurationDocument = XElement.Load(configurationPath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+        }
+
+        public World.World LoadWorld()
+        {
+            var world = _configurationDocument.Element("world");
+            return ValidateWorld(world) ? ParseWorld(world) : null;
+        }
+
+        public TimeMachine LoadTimeMachine()
+        {
+            var timeMachine = _configurationDocument.Element("timeMachine");
+            return TimeMachineFactory.CreateTimeMachine(timeMachine);
+        }
+
+        public IList<Bird.Bird> LoadBirds()
+        {
+            var birds = _configurationDocument.Element("birds");
+            return BirdFactory.CreateBirds(birds);
+        }
+
+        private bool ValidateWorld(XElement world)
+        {
+            DebugLog.DebugLog.WriteLine("Parsing world...");
+
+            try
+            {
+                world.XPathSelectElement("renderFps");
+                world.XPathSelectElement("windowResolution/width");
+                world.XPathSelectElement("windowResolution/height");
+                world.XPathSelectElement("worldSize");
+                world.XPathSelectElement("worldScale");
+                world.XPathSelectElement("rotationAngle");
+            }
+            catch (Exception e)
+            {
+                DebugLog.DebugLog.WriteLine(e.ToString());
+                return false;
+            }
+
+            DebugLog.DebugLog.WriteLine("Parsed successfully!");
+            return true;
+        }
+
+        private bool ValidateTimeMachine(XElement timeMachine)
+        {
+            DebugLog.DebugLog.WriteLine("Parsing time machine...");
+
+            try
+            {
+                var quantum = (int)timeMachine.XPathSelectElement("quantum");
+            }
+            catch (Exception e)
+            {
+                DebugLog.DebugLog.WriteLine(e.ToString());
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateBird(XElement bird)
+        {
+            DebugLog.DebugLog.WriteLine("Parsing bird...");
+
+            try
+            {
+                bird.XPathSelectElement("position/x");
+                bird.XPathSelectElement("position/y");
+                bird.XPathSelectElement("position/z");
+
+                var statistics = StatisticsFactory.CreateStatistics(bird.XPathSelectElement("statistics"));
+
+                var strategy = StrategyFactory.CreateStrategy(bird.XPathSelectElement("strategy"));
+            }
+            catch (Exception e)
+            {
+                DebugLog.DebugLog.WriteLine(e.ToString());
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool ValidateStatistics(XElement statistics)
+        {
+            try
+            {
+                statistics.XPathSelectElement("speed");
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
+            return true
+        }
+
+        private World.World ParseWorld(XElement world)
+        {
+            var renderFps = (int)world.XPathSelectElement("renderFps");
+            var width = (int)world.XPathSelectElement("windowResolution/width");
+            var height = (int)world.XPathSelectElement("windowResolution/height");
+            var windowResolution = new Vector2(width, height);
+            var worldSize = (int)world.XPathSelectElement("worldSize");
+            var worldScale = (float)world.XPathSelectElement("worldScale");
+            var rotationAngle = (float)world.XPathSelectElement("rotationAngle");
+
+            return WorldFactory.CreateWorld(renderFps, windowResolution, worldSize, worldScale, rotationAngle);
+        }
+
+        private Time.TimeMachine ParseTimeMachine(XElement timeMachine)
+        {
+            var quantum = (int)timeMachine.XPathSelectElement("quantum");
+            return TimeMachineFactory.CreateTimeMachine(quantum)
+        }
+    }
+}

@@ -1,4 +1,4 @@
-﻿namespace BirdSimulator.Bird
+﻿namespace Engine.Bird
 {
     public class Statistics
     {

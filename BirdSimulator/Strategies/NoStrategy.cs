@@ -1,8 +1,8 @@
-﻿using BirdSimulator.Bird;
-using BirdSimulator.Interfaces;
+﻿using Engine.Bird;
+using Engine.Interfaces;
 using OpenTK;
 
-namespace BirdSimulator.Strategies
+namespace Engine.Strategies
 {
     public class NoStrategy : IStrategy
     {

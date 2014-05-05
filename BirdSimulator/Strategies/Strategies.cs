@@ -1,4 +1,4 @@
-﻿namespace BirdSimulator.Strategies
+﻿namespace Engine.Strategies
 {
     public enum Strategies
     {

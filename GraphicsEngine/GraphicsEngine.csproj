@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Camera\Camera.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scene\WorldScene.cs" />
@@ -58,6 +59,10 @@
     <ProjectReference Include="..\BirdSimulator\Engine.csproj">
       <Project>{13db93e2-463f-487c-b5f2-41186d8ec30a}</Project>
       <Name>Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utilities\Utils.csproj">
+      <Project>{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

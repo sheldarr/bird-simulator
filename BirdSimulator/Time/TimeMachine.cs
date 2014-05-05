@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Timers;
-using BirdSimulator.Interfaces;
+using Engine.Interfaces;
 
-namespace BirdSimulator.Time
+namespace Engine.Time
 {
     public class TimeMachine
     {

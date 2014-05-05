@@ -1,14 +1,11 @@
-﻿using System.Xml.Linq;
-using System.Xml.XPath;
-using BirdSimulator.Bird;
+﻿using Engine.Bird;
 
-namespace BirdSimulator.Factories
+namespace Engine.Factories
 {
     public static class StatisticsFactory
     {
-        public static Statistics CreateStatistics(XElement statistics)
+        public static Statistics CreateStatistics(float speed)
         {
-            var speed = (float) statistics.XPathSelectElement("speed");
             return new Statistics(speed);
         }
     }

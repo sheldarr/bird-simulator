@@ -1,4 +1,4 @@
-﻿namespace BirdSimulator.Observer
+﻿namespace Engine.Observer
 {
     public class Observer
     {

@@ -1,7 +1,6 @@
-﻿using System;
-using BirdSimulator.ConfigurationLoader;
-using BirdSimulator.DebugLog;
-using BirdSimulator.Observer;
+﻿using Engine.ConfigurationLoader;
+using Engine.DebugLog;
+using Engine.Observer;
 using GraphicsEngine.Scene;
 
 namespace GraphicsEngine
@@ -14,39 +13,30 @@ namespace GraphicsEngine
             DebugLog.WriteLine("Program start");
             DebugLog.WriteLine("Loading configuration.xml");
 
-            try
+            IConfigurationLoader configurationLoader = new ConfigurationLoader("configuration.xml");
+            var world = configurationLoader.LoadWorld();
+            var timeMachine = configurationLoader.LoadTimeMachine();
+            var birds = configurationLoader.LoadBirds();
+
+            DebugLog.WriteLine("Configuration loaded");
+
+            var observer = new Observer();
+
+            foreach (var bird in birds)
             {
-                var configurationLoader = new ConfigurationLoader("configuration.xml");
-                var world = configurationLoader.LoadWorld();
-                var timeMachine = configurationLoader.LoadTimeMachine();
-                var birds = configurationLoader.LoadBirds();
+                observer.Subscribe(bird);
+                timeMachine.AddTraveler(bird);
+            } 
 
-                DebugLog.WriteLine("Configuration loaded");
+            timeMachine.Enabled = true;
 
-                var observer = new Observer();
-
-                foreach (var bird in birds)
-                {
-                    observer.Subscribe(bird);
-                    timeMachine.AddTraveler(bird);
-                } 
-
-                timeMachine.Enabled = true;
-
-                using (var simulationScene = new WorldScene(world, birds))
-                {
-                    DebugLog.WriteLine("Start rendering");
-                    simulationScene.StartRendering();
-                }
-
-                DebugLog.WriteLine("Program end");
-            }
-            catch (Exception e)
+            using (var simulationScene = new WorldScene(world, birds))
             {
-                DebugLog.WriteLine("Program abort");
-                DebugLog.WriteLine(e.ToString());
+                DebugLog.WriteLine("Start rendering");
+                simulationScene.StartRendering();
             }
 
+            DebugLog.WriteLine("Program end");
             DebugLog.SaveLog();
         }
     }

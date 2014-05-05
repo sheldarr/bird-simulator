@@ -1,7 +1,7 @@
-﻿using BirdSimulator.Interfaces;
+﻿using Engine.Interfaces;
 using OpenTK;
 
-namespace BirdSimulator.Strategies
+namespace Engine.Strategies
 {
     public class VectorFlight : IStrategy
     {

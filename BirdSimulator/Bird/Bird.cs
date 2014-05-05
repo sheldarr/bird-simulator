@@ -1,9 +1,9 @@
 ﻿using System;
-using BirdSimulator.Interfaces;
 using System.Collections.Generic;
+using Engine.Interfaces;
 using OpenTK;
 
-namespace BirdSimulator.Bird
+namespace Engine.Bird
 {
     public class Bird : ITimeTraveler
     {

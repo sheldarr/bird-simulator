@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace BirdSimulator.DebugLog
+namespace Engine.DebugLog
 {
     public static class DebugLog
     {

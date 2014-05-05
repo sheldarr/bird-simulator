@@ -1,7 +1,7 @@
-﻿using BirdSimulator.Bird;
+﻿using Engine.Bird;
 using OpenTK;
 
-namespace BirdSimulator.Interfaces
+namespace Engine.Interfaces
 {
     public interface IStrategy
     {

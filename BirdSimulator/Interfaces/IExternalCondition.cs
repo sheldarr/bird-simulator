@@ -1,4 +1,4 @@
-﻿namespace BirdSimulator.Interfaces
+﻿namespace Engine.Interfaces
 {
     public interface IExternalCondition
     {

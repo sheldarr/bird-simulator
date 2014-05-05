@@ -1,6 +1,6 @@
-﻿using BirdSimulator.Interfaces;
+﻿using Engine.Interfaces;
 
-namespace BirdSimulator.ExternalConditions
+namespace Engine.ExternalConditions
 {
     class Fog : IEnvironmentalCondition
     {
