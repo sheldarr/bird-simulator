@@ -29,14 +29,14 @@ namespace GraphicsEngine.Camera
         public void MoveForward()
         {
             Direction.NormalizeFast();
-            Position += Direction * CameraSpeed;
+            Position -= Direction * CameraSpeed;
             LookAt = Matrix4.LookAt(Position, Target, CameraUp);
         }
 
         public void MoveBackward()
         {
             Direction.NormalizeFast();
-            Position -= Direction * CameraSpeed;
+            Position += Direction * CameraSpeed;
             LookAt = Matrix4.LookAt(Position, Target, CameraUp);
         }
 
@@ -47,7 +47,7 @@ namespace GraphicsEngine.Camera
             var perpendicularVector = Vector3.Cross(Direction, Vector3.UnitY);
             perpendicularVector.NormalizeFast();
 
-            Position -= perpendicularVector * CameraSpeed;
+            Position += perpendicularVector * CameraSpeed;
             //Direction -= perpendicularVector * CameraSpeed;
 
             LookAt = Matrix4.LookAt(Position, Target, CameraUp);
@@ -60,7 +60,7 @@ namespace GraphicsEngine.Camera
             var perpendicularVector = Vector3.Cross(Direction, Vector3.UnitY);
             perpendicularVector.NormalizeFast();
 
-            Position += perpendicularVector * CameraSpeed;
+            Position -= perpendicularVector * CameraSpeed;
             //Direction += perpendicularVector * CameraSpeed;
 
             LookAt = Matrix4.LookAt(Position, Target, CameraUp);
@@ -68,11 +68,9 @@ namespace GraphicsEngine.Camera
 
         public void SetTarget(float x, float y)
         {
-           
-
-            var look = D3Math.RotatePoint(Position.Xz, Target.Xz, x);
-            var newLook = new Vector3(look.X, Direction.Y, look.Y);
-            LookAt = Matrix4.LookAt(Position, Position - newLook, CameraUp);
+            //var look = D3Math.RotatePoint(Position.Xz, Target.Xz, x);
+            //var newLook = new Vector3(look.X, Direction.Y, look.Y);
+            //LookAt = Matrix4.LookAt(Position, Position - newLook, CameraUp);
 
             ////var perpendicularVector = Vector3.Cross(direction, Vector3.UnitY);
             //perpendicularVector.NormalizeFast();
