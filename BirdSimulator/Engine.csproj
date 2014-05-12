@@ -7,7 +7,7 @@
     <ProjectGuid>{13DB93E2-463F-487C-B5F2-41186D8EC30A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BirdSimulator</RootNamespace>
+    <RootNamespace>Engine</RootNamespace>
     <AssemblyName>BirdSimulator</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

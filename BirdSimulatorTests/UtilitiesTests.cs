@@ -1,6 +1,5 @@
 ﻿using NUnit.Framework;
 using OpenTK;
-using Utilities;
 
 namespace BirdSimulatorTests
 {

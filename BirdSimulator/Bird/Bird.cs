@@ -8,6 +8,7 @@ namespace Engine.Bird
     public class Bird : ITimeTraveler
     {
         public Vector3 Position;
+        public Vector3 Direction;
 
         public event BirdUpdate OnUpdate;
         public delegate void BirdUpdate(Bird bird, EventArgs e);
@@ -18,16 +19,17 @@ namespace Engine.Bird
         private IStrategy _strategy;
         private IEnumerable<IExternalCondition> _externalConditions;
 
-        public Bird(Vector3 position, Statistics statistics, IStrategy strategy)
+        public Bird(Vector3 position, Vector3 direction, Statistics statistics, IStrategy strategy)
         {
             Position = position;
+            Direction = direction;
             _statistics = statistics;
             _strategy = strategy;
         }
 
         public void Tick()
         {
-            _strategy.Move(ref Position, _statistics);
+            _strategy.Move(ref Position, ref Direction, _statistics);
             OnUpdate(this, new EventArgs());
         }
     }

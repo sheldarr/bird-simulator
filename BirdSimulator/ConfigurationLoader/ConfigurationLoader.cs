@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Engine.Bird;
@@ -23,67 +22,35 @@ namespace Engine.ConfigurationLoader
 
         public World.World LoadWorld()
         {
-            var world = _configurationDocument.Element("world");
+            var world = _configurationDocument.XPathSelectElement("world");
             return ParseWorld(world);
         }
 
         public TimeMachine LoadTimeMachine()
         {
-            var timeMachine = _configurationDocument.Element("timeMachine");
+            var timeMachine = _configurationDocument.XPathSelectElement("timeMachine");
             return ParseTimeMachine(timeMachine);
         }
 
         public IList<Bird.Bird> LoadBirds()
         {
+            IList<Bird.Bird> birdsList = new List<Bird.Bird>();
+            
             var birds = _configurationDocument.XPathSelectElements("birds/bird");
-            return birds.Where(ValidateBird).Select(ParseBird).ToList();
-        }
-
-        private bool ValidateBird(XElement bird)
-        {
-            DebugLog.DebugLog.WriteLine("Validating bird...");
-
-            try
+            foreach (var bird in birds)
             {
-                var x = (float)bird.XPathSelectElement("position/x");
-                var y = (float)bird.XPathSelectElement("position/y");
-                var z = (float)bird.XPathSelectElement("position/z");
-                ValidateStatistics(bird.XPathSelectElement("statistics"));
-                ValidateStrategy(bird.XPathSelectElement("strategy"));
-            }
-            catch (Exception e)
-            {
-                DebugLog.DebugLog.WriteLine("Validation error!");
-                DebugLog.DebugLog.WriteLine(e.ToString());
-                return false;
+                try
+                {  
+                    birdsList.Add(ParseBird(bird));
+                }
+                catch (Exception e)
+                {
+                    DebugLog.DebugLog.WriteLine("Parsing error!");
+                    DebugLog.DebugLog.WriteLine(e.ToString());
+                }
             }
 
-            DebugLog.DebugLog.WriteLine("Validation successfull!");
-            return true;
-        }
-
-        private void ValidateStatistics(XElement statistics)
-        {
-            DebugLog.DebugLog.WriteLine("Validating statistics...");
-            var speed = (float)statistics.XPathSelectElement("speed");
-        }
-
-        private void ValidateStrategy(XElement strategy)
-        {
-            DebugLog.DebugLog.WriteLine("Validating strategy...");
-
-            var typeAttribute = (string)strategy.Attribute("type");
-            Strategies.Strategies strategyType;
-            Enum.TryParse(typeAttribute, true, out strategyType);
-
-            switch (strategyType)
-            {
-                case Strategies.Strategies.VectorFlight:
-                    var x = (float)strategy.XPathSelectElement("flightVector/x");
-                    var y = (float)strategy.XPathSelectElement("flightVector/y");
-                    var z = (float)strategy.XPathSelectElement("flightVector/z");
-                    break;             
-            }
+            return birdsList;
         }
 
         private World.World ParseWorld(XElement world)
@@ -119,11 +86,18 @@ namespace Engine.ConfigurationLoader
             var z = (float)bird.XPathSelectElement("position/z");
 
             var position = new Vector3(x, y, z);
+
+            x = (float)bird.XPathSelectElement("direction/x");
+            y = (float)bird.XPathSelectElement("direction/y");
+            z = (float)bird.XPathSelectElement("direction/z");
+
+            var direction = new Vector3(x, y, z);
+            
             var statistics = ParseStatistics(bird.XPathSelectElement("statistics"));
             var strategy = ParseStrategy(bird.XPathSelectElement("strategy"));
 
             DebugLog.DebugLog.WriteLine("Parsing successfull!");
-            return BirdFactory.CreateBird(position, statistics, strategy);
+            return BirdFactory.CreateBird(position, direction, statistics, strategy);
         }
 
         private Statistics ParseStatistics(XElement statistics)

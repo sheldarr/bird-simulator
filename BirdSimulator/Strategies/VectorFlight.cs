@@ -12,8 +12,11 @@ namespace Engine.Strategies
             _flightVector = flightVector.Normalized();
         }
 
-        public void Move(ref Vector3 position, Bird.Statistics statistics)
+        public void Move(ref Vector3 position,ref Vector3 direction, Bird.Statistics statistics)
         {
+            direction.X = _flightVector.X;
+            direction.Y = _flightVector.Y;
+            direction.Z = _flightVector.Z;
             position += _flightVector * statistics.Speed;
         }
     }

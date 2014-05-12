@@ -20,7 +20,7 @@ namespace Engine.Time
         }
 
         private readonly Timer _timer;
-        private ICollection<ITimeTraveler> _timeTravelers = new List<ITimeTraveler>();
+        private readonly ICollection<ITimeTraveler> _timeTravelers = new List<ITimeTraveler>();
 
         public TimeMachine(double quantum)
         {

@@ -22,7 +22,9 @@ namespace GraphicsEngine.Scene
         private readonly ObjModel _birdObj = new ObjModel("HUMBIRD.obj");
         private readonly ObjModel _treeObj = new ObjModel("tree.obj");
         private readonly Camera.Camera _camera = new Camera.Camera();
-        
+
+        private readonly Cube _innerWorld;
+        private readonly Cube _outerWorld;
 
         public WorldScene(World world, IList<Bird> birds)
         {
@@ -34,6 +36,9 @@ namespace GraphicsEngine.Scene
             _scene.UpdateFrame += UpdateFrame;
             _scene.RenderFrame += RenderFrame;
             _scene.VSync = VSyncMode.On;
+
+            _innerWorld = new Cube(_world.WorldSize, Color.Yellow);
+            _outerWorld = new Cube(2*_world.WorldSize, Color.Red);
         }
 
         public void StartRendering()
@@ -58,7 +63,7 @@ namespace GraphicsEngine.Scene
 
             //var diffuseLight = new float[] { 80, 80, 80, 1.0f };
             //var specularLight = new float[] { 0.5f, 0.5f, 0.5f, 1.0f };
-            //var position = new float[] { -2f, -2f, -2f, 1.0f };
+            //var position = new float[] { -10, -10, -10, 10 };
 
             //GL.LightModel(LightModelParameter.LightModelAmbient, ambient);
             //GL.Light(LightName.Light0, LightParameter.Ambient, ambient);
@@ -75,13 +80,16 @@ namespace GraphicsEngine.Scene
 
         private void UpdateFrame(object sender, FrameEventArgs e)
         {
+            _camera.SetTarget(_scene.Mouse.X - (_world.WindowResolution.Y / 2), _scene.Mouse.Y - (_world.WindowResolution.X / 2));
+            //Mouse.SetPosition(_world.WindowResolution.X/2, _world.WindowResolution.Y/2);
+
             if (_scene.Keyboard[Key.Escape])
             {
                 _scene.Exit();
             }
             if (_scene.Keyboard[Key.A])
             {
-                _rotation.Y += _world.RotationAngle;
+                _camera.MoveLeft();
             }
             if (_scene.Keyboard[Key.W])
             {
@@ -93,7 +101,7 @@ namespace GraphicsEngine.Scene
             }
             if (_scene.Keyboard[Key.D])
             {
-                _rotation.Y -= _world.RotationAngle;
+                _camera.MoveRight();    
             }
             if (_scene.Keyboard[Key.U])
             {
@@ -125,7 +133,6 @@ namespace GraphicsEngine.Scene
         {   
             InitNextFrame();
             PerformTransformations();
-            RenderWorldEdges();
             RenderObjects();
             
             _scene.SwapBuffers();
@@ -152,31 +159,33 @@ namespace GraphicsEngine.Scene
             GL.Rotate(_rotation.Z, 0, 0, 1);
         }
 
-        private void RenderWorldEdges()
-        {
-            var world = new Cube(_world.WorldSize, Color.Yellow);
-            world.Render();
-
-            var outerWorld = new Cube(1024, Color.Red);
-            outerWorld.Render();
-        }
-
         private void RenderObjects()
         {
+            _innerWorld.Render();
+            _outerWorld.Render();
+
             GL.PushMatrix();
             GL.Color3(Color.DarkGreen);
-            GL.Scale(new Vector3(0.05f));
             GL.Translate(-_world.WorldSize, -_world.WorldSize, -_world.WorldSize);
-            GL.Translate(-10, -10, -10);
+            GL.Translate(2, 0, 1);
+            GL.Scale(new Vector3(0.1f));
             _treeObj.Render();
             GL.PopMatrix();
 
 
             GL.PushMatrix();
             GL.Color3(Color.DarkGreen);
-            GL.Scale(new Vector3(0.05f));
-            // GL.Translate(-_world.WorldSize.X, -_world.WorldSize.X, -_world.WorldSize.X);
-            //GL.Translate(0, 0, 0);
+            GL.Translate(-_world.WorldSize, -_world.WorldSize, -_world.WorldSize);
+            GL.Translate(1, 0, 3);
+            GL.Scale(new Vector3(0.1f));
+            _treeObj.Render();
+            GL.PopMatrix();
+
+            GL.PushMatrix();
+            GL.Color3(Color.DarkGreen);
+            GL.Translate(-_world.WorldSize, -_world.WorldSize, -_world.WorldSize);
+            GL.Translate(3, 0, 3);
+            GL.Scale(new Vector3(0.1f));
             _treeObj.Render();
             GL.PopMatrix();
 
@@ -187,7 +196,16 @@ namespace GraphicsEngine.Scene
                 GL.PushMatrix();
                 GL.Translate(-_world.WorldSize, -_world.WorldSize, -_world.WorldSize);
                 GL.Translate(bird.Position.X, bird.Position.Y, bird.Position.Z);
+
+                var a = D3Math.GetRotationBetween(new Vector3(0, 0, 1), bird.Direction);
+                var axis = new Vector3();
+                float angle;
+                a.ToAxisAngle(out axis, out angle);
+                var b = D3Math.RadianToDegree(angle);
+                GL.Rotate((float)b, axis);
+
                 GL.Scale(new Vector3(2.0f));
+
                 _birdObj.Render();
                 GL.PopMatrix();
             }
