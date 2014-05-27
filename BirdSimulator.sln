@@ -1,15 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Engine", "BirdSimulator\Engine.csproj", "{13DB93E2-463F-487C-B5F2-41186D8EC30A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsEngine", "GraphicsEngine\GraphicsEngine.csproj", "{7274D02B-C750-4E10-BB54-F710D5E2AA0C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utilities\Utils.csproj", "{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdSimulatorTests", "BirdSimulatorTests\BirdSimulatorTests.csproj", "{83B27DA1-B392-45A5-8C32-ABA404F61268}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

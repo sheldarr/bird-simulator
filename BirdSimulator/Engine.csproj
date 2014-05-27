@@ -66,6 +66,7 @@
     <Compile Include="Interfaces\ITimeTraveler.cs" />
     <Compile Include="Observer\Observer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\FollowThatGuy.cs" />
     <Compile Include="Strategies\NoStrategy.cs" />
     <Compile Include="Strategies\Strategies.cs" />
     <Compile Include="Strategies\VectorFlight.cs" />
@@ -74,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="EnvironmentalConditions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Utilities\Utils.csproj">
+      <Project>{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
