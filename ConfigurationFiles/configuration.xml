@@ -1,0 +1,110 @@
+<configuration>
+	<world>
+		<renderFps>60</renderFps>
+		<windowResolution>
+			<width>1024</width>
+			<height>768</height>
+		</windowResolution>
+		<worldSize>2</worldSize>
+		<rotationSpeed>1</rotationSpeed>
+	</world>
+	
+	<timeMachine>
+		<quantum>50</quantum>
+	</timeMachine>
+	
+	<birds>
+	
+		<bird>
+			<position>
+				<x>2</x>
+				<y>1</y>
+				<z>1</z>
+			</position>
+			<direction>
+				<x>0</x>
+				<y>1</y>
+				<z>1</z>
+			</direction>
+			<statistics>
+				<speed>0.01</speed>
+			</statistics>
+			<strategy type="vectorFlight">
+				<flightVector>
+					<x>0</x>
+					<y>1</y>
+					<z>1</z>
+				</flightVector>
+			</strategy>
+		</bird>
+	
+		<bird>
+			<position>
+				<x>1</x>
+				<y>1</y>
+				<z>3</z>
+			</position>
+			<direction>
+				<x>1</x>
+				<y>2</y>
+				<z>-2</z>
+			</direction>
+			<statistics>
+				<speed>0.01</speed>
+			</statistics>
+			<strategy type="vectorFlight">
+				<flightVector>
+					<x>1</x>
+					<y>2</y>
+					<z>-2</z>
+				</flightVector>
+			</strategy>
+		</bird>
+		
+		<bird>
+			<position>
+				<x>3</x>
+				<y>1</y>
+				<z>3</z>
+			</position>
+			<direction>
+				<x>-1</x>
+				<y>2</y>
+				<z>-2</z>
+			</direction>
+			<statistics>
+				<speed>0.01</speed>
+			</statistics>
+			<strategy type="vectorFlight">
+				<flightVector>
+					<x>-1</x>
+					<y>2</y>
+					<z>-2</z>
+				</flightVector>
+			</strategy>
+		</bird>
+		
+		<bird>
+			<position>
+				<x>0</x>
+				<y>0</y>
+				<z>0</z>
+			</position>
+			<direction>
+				<x>4</x>
+				<y>4</y>
+				<z>4</z>
+			</direction>
+			<statistics>
+				<speed>0.02</speed>
+			</statistics>
+			<strategy type="vectorFlight">
+				<flightVector>
+					<x>4</x>
+					<y>4</y>
+					<z>4</z>
+				</flightVector>
+			</strategy>
+		</bird>
+	</birds>
+</configuration>
