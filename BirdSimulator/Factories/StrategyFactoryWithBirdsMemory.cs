@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Engine.Interfaces;
@@ -7,14 +8,16 @@ using OpenTK;
 
 namespace Engine.Factories
 {
-    public static class StrategyFactory
+    class StrategyFactoryWithBirdsMemory
     {
-        public static IStrategy CreateVectorFlight(Vector3 vectorFlight)
+        private readonly IList<Bird.Bird> _birds;
+ 
+        public StrategyFactoryWithBirdsMemory(IList<Bird.Bird> birds)
         {
-            return new VectorFlight(vectorFlight);
+            _birds = birds;
         }
 
-        public static IStrategy GetStrategyFromXml(XElement strategyElement)
+        public IStrategy GetStrategy(XElement strategyElement)
         {
             var typeAttribute = (string)strategyElement.Attribute("type");
             Strategies.Strategies strategyType;
@@ -29,7 +32,9 @@ namespace Engine.Factories
                     var flightVector = new Vector3(x, y, z);
                     return new VectorFlight(flightVector);
                 case Strategies.Strategies.FollowThatGuy:
-                    
+                    var birdToFollow = (int) strategyElement.XPathSelectElement("birdToFollow");
+                    var minDistance = (double) strategyElement.XPathSelectElement("minDistance");
+                    return new FollowThatGuy(_birds[birdToFollow], minDistance);
             }
 
             return new NoStrategy();

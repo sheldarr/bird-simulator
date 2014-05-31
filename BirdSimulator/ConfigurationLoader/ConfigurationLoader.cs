@@ -5,7 +5,6 @@ using System.Xml.XPath;
 using Engine.Bird;
 using Engine.Factories;
 using Engine.Interfaces;
-using Engine.Strategies;
 using Engine.Time;
 using OpenTK;
 
@@ -14,9 +13,13 @@ namespace Engine.ConfigurationLoader
     public class ConfigurationLoader : IConfigurationLoader
     {
         private readonly XElement _configurationDocument;
+        private readonly IList<Bird.Bird> _loadedBirds;
+        private readonly StrategyFactoryWithBirdsMemory _strategyFactory;
 
         public ConfigurationLoader(string configurationPath)
         {
+            _loadedBirds = new List<Bird.Bird>();
+            _strategyFactory = new StrategyFactoryWithBirdsMemory(_loadedBirds);
             _configurationDocument = XElement.Load(configurationPath);
         }
 
@@ -34,14 +37,12 @@ namespace Engine.ConfigurationLoader
 
         public IList<Bird.Bird> LoadBirds()
         {
-            IList<Bird.Bird> birdsList = new List<Bird.Bird>();
-            
             var birds = _configurationDocument.XPathSelectElements("birds/bird");
             foreach (var bird in birds)
             {
                 try
                 {  
-                    birdsList.Add(ParseBird(bird));
+                    _loadedBirds.Add(ParseBird(bird));
                 }
                 catch (Exception e)
                 {
@@ -50,7 +51,7 @@ namespace Engine.ConfigurationLoader
                 }
             }
 
-            return birdsList;
+            return _loadedBirds;
         }
 
         private World.World ParseWorld(XElement world)
@@ -108,21 +109,7 @@ namespace Engine.ConfigurationLoader
 
         private IStrategy ParseStrategy(XElement strategy)
         {
-            var typeAttribute = (string)strategy.Attribute("type");
-            Strategies.Strategies strategyType;
-            Enum.TryParse(typeAttribute, true, out strategyType);
-
-            switch (strategyType)
-            {
-                case Strategies.Strategies.VectorFlight:
-                    var x = (float)strategy.XPathSelectElement("flightVector/x");
-                    var y = (float)strategy.XPathSelectElement("flightVector/y");
-                    var z = (float)strategy.XPathSelectElement("flightVector/z");
-                    var flightVector = new Vector3(x, y, z);
-                    return StrategyFactory.CreateVectorFlight(flightVector);
-            }
-
-            return new NoStrategy();
+            return _strategyFactory.GetStrategy(strategy);
         }
     }
 }

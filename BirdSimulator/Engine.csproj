@@ -58,6 +58,7 @@
     <Compile Include="Factories\BirdFactory.cs" />
     <Compile Include="Factories\StatisticsFactory.cs" />
     <Compile Include="Factories\StrategyFactory.cs" />
+    <Compile Include="Factories\StrategyFactoryWithBirdsMemory.cs" />
     <Compile Include="Factories\TimeMachineFactory.cs" />
     <Compile Include="Factories\WorldFactory.cs" />
     <Compile Include="Interfaces\IEnvironmentalCondition.cs" />
