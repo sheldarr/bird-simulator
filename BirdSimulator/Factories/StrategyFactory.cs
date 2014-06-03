@@ -28,8 +28,6 @@ namespace Engine.Factories
                     var z = (float)strategyElement.XPathSelectElement("flightVector/z");
                     var flightVector = new Vector3(x, y, z);
                     return new VectorFlight(flightVector);
-                case Strategies.Strategies.FollowThatGuy:
-                    
             }
 
             return new NoStrategy();
