@@ -19,10 +19,10 @@ namespace GraphicsEngine.Camera
 
         public Camera()
         {
-            Position = new Vector3(3, 3, 3);
+            Position = new Vector3(-190, -190, -190);
             Direction = new Vector3(-3, -3, -3);
             CameraUp = new Vector3(0, 1, 0);
-            CameraSpeed = 0.2f;
+            CameraSpeed = 1.0f;
             LookAt = Matrix4.LookAt(Position, Target, CameraUp);
         }
 
@@ -68,7 +68,7 @@ namespace GraphicsEngine.Camera
 
         public void SetTarget(float x, float y)
         {
-            var angle = -(180 * y);
+            var angle = -(89 * y);
             //if (angle > 180)
             //{
             //    angle = 180 - (angle - 180);
@@ -82,7 +82,7 @@ namespace GraphicsEngine.Camera
             var rotation = Matrix4.CreateRotationX((float)D3Math.DegreeToRadian(angle));
             Direction = Vector3.TransformNormal(new Vector3(0, 0, 1), rotation);
 
-            angle = -(180 * x);
+            angle = -(270 * x);
             rotation = Matrix4.CreateRotationY((float)D3Math.DegreeToRadian(angle));
             Direction = Vector3.TransformNormal(Direction, rotation);
 

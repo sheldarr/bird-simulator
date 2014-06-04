@@ -9,15 +9,17 @@ namespace Utilities.Models
 {
     public class BirdModel : IRenderable
     {
+        private const float ModelFactor = 1.0f;
+        private readonly Vector3 _realScale;
+
         private readonly Bird _bird;
-        private readonly Vector3 _scale;
         private readonly Color _color = Color.SaddleBrown;
         private readonly ObjModel.ObjModel _model = ObjModelLoader.Load(@"Resources\birdModel.obj");
 
         public BirdModel(Bird bird, float scale)
         {
             _bird = bird;
-            _scale = new Vector3(scale);
+            _realScale = new Vector3(scale * ModelFactor);
         }
 
         public void Render()
@@ -27,7 +29,7 @@ namespace Utilities.Models
 
             RotateModel();
 
-            GL.Scale(_scale);
+            GL.Scale(_realScale);
             _model.Render();
         }
 
