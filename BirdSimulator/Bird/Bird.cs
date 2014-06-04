@@ -14,9 +14,9 @@ namespace Engine.Bird
         public delegate void BirdUpdate(Bird bird, EventArgs e);
 
   
-        private Statistics _statistics;
+        private readonly Statistics _statistics;
      
-        private IStrategy _strategy;
+        private readonly IStrategy _strategy;
         private IEnumerable<IExternalCondition> _externalConditions;
 
         public Bird(Vector3 position, Vector3 direction, Statistics statistics, IStrategy strategy)

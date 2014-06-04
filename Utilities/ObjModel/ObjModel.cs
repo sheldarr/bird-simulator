@@ -15,12 +15,28 @@ namespace Utilities.ObjModel
         private int _trianglesBufferId;
         private int _quadsBufferId;
 
-        public ObjModel(string fileName)
+        public void Render()
         {
-            ObjModelLoader.Load(this, fileName);
-        } 
+            Prepare();
 
-        public void Prepare()
+            GL.PushClientAttrib(ClientAttribMask.ClientVertexArrayBit);
+            GL.EnableClientState(EnableCap.VertexArray);
+            GL.BindBuffer(BufferTarget.ArrayBuffer, _verticesBufferId);
+            GL.InterleavedArrays(InterleavedArrayFormat.T2fN3fV3f, Marshal.SizeOf(typeof(ObjVertex)), IntPtr.Zero);
+
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _trianglesBufferId);
+            GL.DrawElements(BeginMode.Triangles, Triangles.Length * 3, DrawElementsType.UnsignedInt, IntPtr.Zero);
+
+            if (Quads.Length > 0)
+            {
+                GL.BindBuffer(BufferTarget.ElementArrayBuffer, _quadsBufferId);
+                GL.DrawElements(BeginMode.Quads, Quads.Length * 4, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            }
+
+            GL.PopClientAttrib();
+        }
+
+        private void Prepare()
         {
             if (_verticesBufferId == 0)
             {
@@ -43,26 +59,6 @@ namespace Utilities.ObjModel
                 GL.BufferData(BufferTarget.ElementArrayBuffer, (IntPtr)(Quads.Length * Marshal.SizeOf(typeof(ObjQuad))), Quads, BufferUsageHint.StaticDraw);
             }
         }
-
-        public void Render()
-        {
-            Prepare();
-
-            GL.PushClientAttrib(ClientAttribMask.ClientVertexArrayBit);
-            GL.EnableClientState(EnableCap.VertexArray);
-            GL.BindBuffer(BufferTarget.ArrayBuffer, _verticesBufferId);
-            GL.InterleavedArrays(InterleavedArrayFormat.T2fN3fV3f, Marshal.SizeOf(typeof(ObjVertex)), IntPtr.Zero);
-
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, _trianglesBufferId);
-            GL.DrawElements(BeginMode.Triangles, Triangles.Length * 3, DrawElementsType.UnsignedInt, IntPtr.Zero);
-
-            if (Quads.Length > 0)
-            {
-                GL.BindBuffer(BufferTarget.ElementArrayBuffer, _quadsBufferId);
-                GL.DrawElements(BeginMode.Quads, Quads.Length * 4, DrawElementsType.UnsignedInt, IntPtr.Zero);
-            }
-
-            GL.PopClientAttrib();
-        }
+        
     }
 }

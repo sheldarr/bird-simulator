@@ -18,66 +18,54 @@ namespace Utilities.Shapes
         public void Render()
         {
             GL.PushMatrix();
-            
             GL.Color3(Color);
-            GL.Begin(PrimitiveType.LineStrip);
 
+            GL.Begin(PrimitiveType.LineStrip);
             GL.Vertex3(-Size, Size, -Size);
             GL.Vertex3(Size, Size, -Size);
             GL.Vertex3(Size, -Size, -Size);
             GL.Vertex3(-Size, -Size, -Size);
             GL.Vertex3(-Size, Size, -Size);
-
             GL.End();
 
             GL.Begin(PrimitiveType.LineStrip);
-
             GL.Vertex3(-Size, Size, Size);
             GL.Vertex3(Size, Size, Size);
             GL.Vertex3(Size, -Size, Size);
             GL.Vertex3(-Size, -Size, Size);
             GL.Vertex3(-Size, Size, Size);
-
             GL.End();
 
             GL.Begin(PrimitiveType.LineStrip);
-
             GL.Vertex3(-Size, Size, Size);
             GL.Vertex3(Size, Size, Size);
             GL.Vertex3(Size, Size, -Size);
             GL.Vertex3(-Size, Size, -Size);
             GL.Vertex3(-Size, Size, Size);
-
             GL.End();
 
             GL.Begin(PrimitiveType.LineStrip);
-
             GL.Vertex3(Size, -Size, Size);
             GL.Vertex3(Size, Size, Size);
             GL.Vertex3(Size, Size, -Size);
             GL.Vertex3(Size, -Size, -Size);
             GL.Vertex3(Size, -Size, Size);
-
             GL.End();
 
             GL.Begin(PrimitiveType.LineStrip);
-
             GL.Vertex3(-Size, -Size, Size);
             GL.Vertex3(-Size, Size, Size);
             GL.Vertex3(-Size, Size, -Size);
             GL.Vertex3(-Size, -Size, -Size);
             GL.Vertex3(-Size, -Size, Size);
-
             GL.End();
 
-            GL.Begin(PrimitiveType.Quads);
-
-            GL.Color3(Color.ForestGreen);
+            GL.Begin(PrimitiveType.LineStrip);
             GL.Vertex3(-Size, -Size, Size);
             GL.Vertex3(Size, -Size, Size);
             GL.Vertex3(Size, -Size, -Size);
             GL.Vertex3(-Size, -Size, -Size);
-
+            GL.Vertex3(-Size, -Size, Size);
             GL.End();
 
             GL.PopMatrix();

@@ -5,14 +5,14 @@ namespace Utilities
 {
     public static class D3Math
     {
-        public static double DegreeToRadian(double angle)
+        public static double DegreeToRadian(double degree)
         {
-           return Math.PI * angle / 180.0;
+           return Math.PI * degree / 180.0;
         }
 
-        public static double RadianToDegree(double angle)
+        public static double RadianToDegree(double radian)
         {
-           return angle * (180.0 / Math.PI);
+           return radian * (180.0 / Math.PI);
         }
 
         public static Quaternion GetRotationBetween(Vector3 u, Vector3 v)
