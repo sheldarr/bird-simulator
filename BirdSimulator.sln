@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphicsEngine", "GraphicsE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utilities\Utils.csproj", "{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BirdSimulatorTests", "BirdSimulatorTests\BirdSimulatorTests.csproj", "{83B27DA1-B392-45A5-8C32-ABA404F61268}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{79731BE5-4B39-4A3E-AEC8-36EDA330A36C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83B27DA1-B392-45A5-8C32-ABA404F61268}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

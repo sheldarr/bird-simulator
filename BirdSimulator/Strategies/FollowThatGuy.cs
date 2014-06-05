@@ -1,7 +1,7 @@
-﻿using Engine.Bird;
+﻿using System;
+using Engine.Bird;
 using Engine.Interfaces;
 using OpenTK;
-using Utilities;
 
 namespace Engine.Strategies
 {
@@ -20,7 +20,7 @@ namespace Engine.Strategies
         {
             direction = (_guide.Position - position).Normalized();
             var estimatedPosition = GetPosition(position, direction, statistics.Speed);
-            var estimatedDistance = D3Math.DistanceBetweenPoints(estimatedPosition, _guide.Position);
+            var estimatedDistance = DistanceBetweenPoints(estimatedPosition, _guide.Position);
             position = (estimatedDistance >= _minDistance) ? estimatedPosition : FindClosestPositionToGuide(position, direction, statistics.Speed);
         }
 
@@ -38,11 +38,19 @@ namespace Engine.Strategies
             {
                 var adjustedSpeed = speed - 0.01*++i;
                 adjustedPosition = GetPosition(position, direction, (float)adjustedSpeed);
-                adjustedDistanceToGuide = D3Math.DistanceBetweenPoints(adjustedPosition, _guide.Position);
+                adjustedDistanceToGuide = DistanceBetweenPoints(adjustedPosition, _guide.Position);
 
             } while (adjustedDistanceToGuide <= _minDistance && i < 1000);
 
             return adjustedPosition;
+        }
+
+        private double DistanceBetweenPoints(Vector3 pointA, Vector3 pointB)
+        {
+            double dX = pointB.X - pointA.X;
+            double dY = pointB.Y - pointA.Y;
+            double dZ = pointB.Z - pointA.Z;
+            return Math.Sqrt(dX * dX + dY * dY + dZ * dZ);
         }
     }
 }

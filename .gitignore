@@ -154,3 +154,24 @@ $RECYCLE.BIN/
 
 # Mac desktop service store files
 .DS_Store
+/Libraries
+/Libraries/QuickFont.dll
+/packages
+/packages/OpenTK.1.1.1589.5941
+/packages/OpenTK.1.1.1589.5941/lib/NET40
+/packages/OpenTK.1.1.1589.5941/lib/NET40/OpenTK.dll.config
+/packages/OpenTK.1.1.1589.5941/lib/NET40/OpenTK.xml
+/packages/OpenTK.1.1.1589.5941/OpenTK.1.1.1589.5941.nupkg
+/packages/SharpFont.2.5.0.1
+/packages/SharpFont.2.5.0.1/Content
+/packages/SharpFont.2.5.0.1/Content/freetype6.dll
+/packages/SharpFont.2.5.0.1/Content/SharpFont.dll.config
+/packages/SharpFont.2.5.0.1/lib/net20
+/packages/SharpFont.2.5.0.1/lib/net20/SharpFont.dll
+/packages/SharpFont.2.5.0.1/lib/net20/SharpFont.xml
+/packages/SharpFont.2.5.0.1/Tools
+/packages/SharpFont.2.5.0.1/Tools/install.ps1
+/packages/SharpFont.2.5.0.1/Tools/uninstall.ps1
+/packages/SharpFont.2.5.0.1/README.md
+/packages/SharpFont.2.5.0.1/SharpFont.2.5.0.1.nupkg
+/packages/SharpFont.2.5.0.1/SharpFont.2.5.0.1.nuspec

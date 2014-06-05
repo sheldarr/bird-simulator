@@ -18,13 +18,16 @@ namespace Utilities.ObjModel
         private static readonly char[] SplitCharacters = { ' ' };
         private static readonly char[] FaceParamaterSplitter = { '/' };
 
-        public static void Load(ObjModel model, string fileName)
+        public static ObjModel Load(string fileName)
         {
             using (var streamReader = new StreamReader(fileName))
             {
+                var model = new ObjModel();
                 Load(model, streamReader);
                 streamReader.Close();
-            }
+
+                return model;
+            }     
         }
 
         static void Load(ObjModel model, TextReader textReader)

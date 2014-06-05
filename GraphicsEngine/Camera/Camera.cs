@@ -11,7 +11,7 @@ namespace GraphicsEngine.Camera
 
         public Vector3 Target 
         {
-            get { return Position - Direction; }
+            get { return (Position - Direction); }
         }
 
         public Matrix4 LookAt;
@@ -19,10 +19,10 @@ namespace GraphicsEngine.Camera
 
         public Camera()
         {
-            Position = new Vector3(3, 3, 3);
-            Direction = new Vector3(3, 3, 3);
+            Position = new Vector3(-190, -190, -190);
+            Direction = new Vector3(-3, -3, -3);
             CameraUp = new Vector3(0, 1, 0);
-            CameraSpeed = 0.05f;
+            CameraSpeed = 1.0f;
             LookAt = Matrix4.LookAt(Position, Target, CameraUp);
         }
 
@@ -68,17 +68,25 @@ namespace GraphicsEngine.Camera
 
         public void SetTarget(float x, float y)
         {
-            //var look = D3Math.RotatePoint(Position.Xz, Target.Xz, x);
-            //var newLook = new Vector3(look.X, Direction.Y, look.Y);
-            //LookAt = Matrix4.LookAt(Position, Position - newLook, CameraUp);
+            var angle = -(89 * y);
+            //if (angle > 180)
+            //{
+            //    angle = 180 - (angle - 180);
+            //}
 
-            ////var perpendicularVector = Vector3.Cross(direction, Vector3.UnitY);
-            //perpendicularVector.NormalizeFast();
+            //if (angle < -180)
+            //{
+            //    angle = 180 - (angle - 180);
+            //}
 
-            //Position -= perpendicularVector * CameraSpeed;
-            //Target -= perpendicularVector * CameraSpeed;
+            var rotation = Matrix4.CreateRotationX((float)D3Math.DegreeToRadian(angle));
+            Direction = Vector3.TransformNormal(new Vector3(0, 0, 1), rotation);
 
-            //LookAt = Matrix4.LookAt(Position, Target, CameraUp);
+            angle = -(270 * x);
+            rotation = Matrix4.CreateRotationY((float)D3Math.DegreeToRadian(angle));
+            Direction = Vector3.TransformNormal(Direction, rotation);
+
+            LookAt = Matrix4.LookAt(Position, Target, CameraUp);
         }
     }
 }

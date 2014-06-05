@@ -5,14 +5,14 @@ namespace Utilities
 {
     public static class D3Math
     {
-        public static double DegreeToRadian(double angle)
+        public static double DegreeToRadian(double degree)
         {
-           return Math.PI * angle / 180.0;
+           return Math.PI * degree / 180.0;
         }
 
-        public static double RadianToDegree(double angle)
+        public static double RadianToDegree(double radian)
         {
-           return angle * (180.0 / Math.PI);
+           return radian * (180.0 / Math.PI);
         }
 
         public static Quaternion GetRotationBetween(Vector3 u, Vector3 v)
@@ -42,14 +42,6 @@ namespace Utilities
                 Y = (int) (sinTheta * (pointToRotate.X - centerPoint.X) +
                     cosTheta * (pointToRotate.Y - centerPoint.Y) + centerPoint.Y)
             };
-        }
-
-        public static double DistanceBetweenPoints(Vector3 pointA, Vector3 pointB)
-        {
-            double dX = pointB.X - pointA.X;
-            double dY = pointB.Y - pointA.Y;
-            double dZ = pointB.Z - pointA.Z;
-            return Math.Sqrt(dX*dX + dY*dY + dZ*dZ);
         }
     }
 }

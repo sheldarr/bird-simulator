@@ -12,13 +12,13 @@ namespace Engine.Bird
         public Vector3 Position;
         public Vector3 Direction;
 
-        public event BirdUpdate OnUpdate;
+        public event Bird.BirdUpdate OnUpdate;
         public delegate void BirdUpdate(Bird bird, EventArgs e);
 
   
-        private Statistics _statistics;
+        private readonly Statistics _statistics;
      
-        private IStrategy _strategy;
+        private readonly IStrategy _strategy;
         private IEnumerable<IExternalCondition> _externalConditions;
 
         public Bird(Vector3 position, Vector3 direction, Statistics statistics, IStrategy strategy)
