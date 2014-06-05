@@ -33,8 +33,8 @@ namespace GraphicsEngine.Scene
         {
             _graphicsSettings = graphicsSettings;
             _world = world;
-            _camera = new Camera.Camera(_graphicsSettings.CameraSpeed, _graphicsSettings.CameraPosition,
-                _graphicsSettings.CameraDirection);
+            _camera = new Camera.Camera(_graphicsSettings.CameraSpeed, _graphicsSettings.MaxVerticalAngle, _graphicsSettings.MaxHorizontalAngle,
+                _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection);
 
             birds.ToList().ForEach(bird => _objects.Add(new BirdModel(bird, _world.WorldSize)));
 

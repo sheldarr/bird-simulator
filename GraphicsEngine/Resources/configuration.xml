@@ -7,6 +7,8 @@
     </windowResolution>
 	<camera>
 	  <speed>2.0</speed>
+	  <maxVerticalAngle>89</maxVerticalAngle>
+	  <maxHorizontalAngle>270</maxHorizontalAngle>
 	  <position>
         <x>-200</x>
         <y>-200</y>

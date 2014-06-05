@@ -65,6 +65,8 @@ namespace Engine.ConfigurationLoader
             var height = (int)graphicsSettings.XPathSelectElement("windowResolution/height");
             var windowResolution = new Vector2(width, height);
             var cameraSpeed = (float)graphicsSettings.XPathSelectElement("camera/speed");
+            var maxVerticalAngle = (float)graphicsSettings.XPathSelectElement("camera/maxVerticalAngle");
+            var maxHorizontalAngle = (float)graphicsSettings.XPathSelectElement("camera/maxHorizontalAngle");
 
             var x = (float)graphicsSettings.XPathSelectElement("camera/position/x");
             var y = (float)graphicsSettings.XPathSelectElement("camera/position/y");
@@ -76,7 +78,7 @@ namespace Engine.ConfigurationLoader
             z = (float)graphicsSettings.XPathSelectElement("camera/direction/z");
             var cameraDirection = new Vector3(x, y, z);
 
-            return GraphicsSettingsFactory.CreateGraphicsSettings(fps, windowResolution, cameraSpeed, cameraPosition, cameraDirection);
+            return GraphicsSettingsFactory.CreateGraphicsSettings(fps, windowResolution, cameraSpeed, maxVerticalAngle, maxHorizontalAngle, cameraPosition, cameraDirection);
         }
 
         private World.World ParseWorld(XElement world)

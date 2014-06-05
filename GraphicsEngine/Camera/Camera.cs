@@ -5,7 +5,9 @@ namespace GraphicsEngine.Camera
 {
     public class Camera
     {
-        public float Speed { get; set; } 
+        public float Speed { get; set; }
+        public float MaxVerticalAngle { get; set; }
+        public float MaxHorizontalAngle { get; set; }
 
         public Vector3 Position { get; set; }
         public Vector3 CameraUp { get; set; }
@@ -18,9 +20,12 @@ namespace GraphicsEngine.Camera
 
         public Matrix4 LookAt;
 
-        public Camera(float speed, Vector3 cameraPosition, Vector3 cameraDirection)
+        public Camera(float speed, float maxVerticalAngle, float maxHorizontalAngle, Vector3 cameraPosition, Vector3 cameraDirection)
         {
             Speed = speed;
+            MaxVerticalAngle = maxVerticalAngle;
+            MaxHorizontalAngle = maxHorizontalAngle;
+
             Position = cameraPosition;
             Direction = cameraDirection;
 
@@ -68,11 +73,11 @@ namespace GraphicsEngine.Camera
 
         public void SetTarget(float x, float y)
         {
-            var angle = -(89 * y);
+            var angle = -(MaxVerticalAngle * y);
             var rotation = Matrix4.CreateRotationX((float)D3Math.DegreeToRadian(angle));
             Direction = Vector3.TransformNormal(new Vector3(0, 0, 1), rotation);
 
-            angle = -(270 * x);
+            angle = -(MaxHorizontalAngle * x);
             rotation = Matrix4.CreateRotationY((float)D3Math.DegreeToRadian(angle));
             Direction = Vector3.TransformNormal(Direction, rotation);
 
