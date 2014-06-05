@@ -7,6 +7,8 @@ namespace Engine.Bird
 {
     public class Bird : ITimeTraveler
     {
+        public string Id { get; set; }
+
         public Vector3 Position;
         public Vector3 Direction;
 

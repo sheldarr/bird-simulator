@@ -82,6 +82,8 @@ namespace Engine.ConfigurationLoader
         private Bird.Bird ParseBird(XElement bird)
         {
             DebugLog.DebugLog.WriteLine("Parsing bird...");
+            var name = (string) bird.XPathSelectElement("name");
+
             var x = (float)bird.XPathSelectElement("position/x");
             var y = (float)bird.XPathSelectElement("position/y");
             var z = (float)bird.XPathSelectElement("position/z");
@@ -98,7 +100,7 @@ namespace Engine.ConfigurationLoader
             var strategy = ParseStrategy(bird.XPathSelectElement("strategy"));
 
             DebugLog.DebugLog.WriteLine("Parsing successfull!");
-            return BirdFactory.CreateBird(position, direction, statistics, strategy);
+            return BirdFactory.CreateBird(name, position, direction, statistics, strategy);
         }
 
         private Statistics ParseStatistics(XElement statistics)

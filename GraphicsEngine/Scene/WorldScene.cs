@@ -19,8 +19,8 @@ namespace GraphicsEngine.Scene
         private readonly World _world;
         private readonly IList<Bird> _birds; 
         private Vector3 _rotation = new Vector3(0, 0 ,0);
-        private readonly ObjModel _birdObj = new ObjModel("HUMBIRD.obj");
-        private readonly ObjModel _treeObj = new ObjModel("tree.obj");
+        private readonly ObjModel _birdObj = new ObjModel("Models/HUMBIRD.obj");
+        private readonly ObjModel _treeObj = new ObjModel("Models/tree.obj");
         private readonly Camera.Camera _camera = new Camera.Camera();
 
         private readonly Cube _innerWorld;
