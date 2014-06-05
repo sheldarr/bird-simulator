@@ -11,7 +11,7 @@
 	  <maxHorizontalAngle>270</maxHorizontalAngle>
 	  <position>
         <x>-195</x>
-        <y>-195</y>
+        <y>100</y>
         <z>-195</z>
       </position>
       <direction>
@@ -168,7 +168,7 @@
 			<direction>
 				<x>2</x>
 				<y>0</y>
-				<z>0</z>
+				<z>0.5</z>
 			</direction>
 		</effect>
 		<effect type="acceleration">
