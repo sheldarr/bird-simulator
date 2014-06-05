@@ -56,10 +56,12 @@
     <Compile Include="Bird\Bird.cs" />
     <Compile Include="Bird\Statistics.cs" />
     <Compile Include="ConfigurationLoader\ConfigurationLoader.cs" />
+    <Compile Include="ConfigurationLoader\GraphicsSettings.cs" />
     <Compile Include="ConfigurationLoader\IConfigurationLoader.cs" />
     <Compile Include="ExternalConditions\Fog.cs" />
     <Compile Include="ExternalConditions\Wind.cs" />
     <Compile Include="Factories\BirdFactory.cs" />
+    <Compile Include="Factories\GraphicsSettingsFactory.cs" />
     <Compile Include="Factories\StatisticsFactory.cs" />
     <Compile Include="Factories\StrategyFactoryWithBirdsMemory.cs" />
     <Compile Include="Factories\TimeMachineFactory.cs" />

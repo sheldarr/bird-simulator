@@ -4,9 +4,9 @@ namespace Engine.Factories
 {
     public static class WorldFactory
     {
-        public static World.World CreateWorld(int renderFps, Vector2 windowResolution, int worldSize, float rotationSpeed)
+        public static World.World CreateWorld(int worldSize, int numberOfTrees)
         {
-            return new World.World(renderFps, windowResolution, worldSize, rotationSpeed);
+            return new World.World(worldSize, numberOfTrees);
         }
     }
 }

@@ -4,17 +4,13 @@ namespace Engine.World
 {
     public class World
     {
-        public int RenderFps { get; set; }
-        public Vector2 WindowResolution { get; set; }
         public int WorldSize { get; set; }
-        public float RotationAngle { get; set; }
+        public int NumberOfTrees { get; set; }
 
-        public World(int renderFps, Vector2 windowResolution, int worldSize, float rotationSpeed)
+        public World(int worldSize, int numberOfTrees)
         {
-            RenderFps = renderFps;
-            WindowResolution = windowResolution;
             WorldSize = worldSize;
-            RotationAngle = rotationSpeed;
+            NumberOfTrees = numberOfTrees;
         }
     }
 }

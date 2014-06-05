@@ -8,6 +8,7 @@ namespace GraphicsEngine
         static void Main(string[] args)
         {
             IConfigurationLoader configurationLoader = new ConfigurationLoader(@"Resources\configuration.xml");
+            var graphicsSettings = configurationLoader.LoadGraphicsSettings();
             var world = configurationLoader.LoadWorld();
             var timeMachine = configurationLoader.LoadTimeMachine();
             var birds = configurationLoader.LoadBirds();
@@ -22,7 +23,7 @@ namespace GraphicsEngine
 
             timeMachine.Enabled = true;
 
-            using (var simulationScene = new Scene.Scene(world, birds))
+            using (var simulationScene = new Scene.Scene(graphicsSettings, world, birds))
             {
                 simulationScene.StartRendering();
             }

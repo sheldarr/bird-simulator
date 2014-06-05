@@ -15,7 +15,6 @@ namespace Engine.Bird
 
         public event Bird.BirdUpdate OnUpdate;
         public delegate void BirdUpdate(Bird bird, EventArgs e);
-
   
         private readonly Statistics _statistics;
      

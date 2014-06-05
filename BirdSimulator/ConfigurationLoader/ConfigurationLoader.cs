@@ -23,6 +23,12 @@ namespace Engine.ConfigurationLoader
             _configurationDocument = XElement.Load(configurationPath);
         }
 
+        public GraphicsSettings LoadGraphicsSettings()
+        {
+            var graphicsSettings = _configurationDocument.XPathSelectElement("graphicsSettings");
+            return ParseGraphicsSettings(graphicsSettings);
+        }
+
         public World.World LoadWorld()
         {
             var world = _configurationDocument.XPathSelectElement("world");
@@ -52,16 +58,33 @@ namespace Engine.ConfigurationLoader
             return _loadedBirds;
         }
 
+        private GraphicsSettings ParseGraphicsSettings(XElement graphicsSettings)
+        {
+            var fps = (int)graphicsSettings.XPathSelectElement("fps");
+            var width = (int)graphicsSettings.XPathSelectElement("windowResolution/width");
+            var height = (int)graphicsSettings.XPathSelectElement("windowResolution/height");
+            var windowResolution = new Vector2(width, height);
+            var cameraSpeed = (float)graphicsSettings.XPathSelectElement("camera/speed");
+
+            var x = (float)graphicsSettings.XPathSelectElement("camera/position/x");
+            var y = (float)graphicsSettings.XPathSelectElement("camera/position/y");
+            var z = (float)graphicsSettings.XPathSelectElement("camera/position/z");
+            var cameraPosition = new Vector3(x, y, z);
+
+            x = (float)graphicsSettings.XPathSelectElement("camera/direction/x");
+            y = (float)graphicsSettings.XPathSelectElement("camera/direction/y");
+            z = (float)graphicsSettings.XPathSelectElement("camera/direction/z");
+            var cameraDirection = new Vector3(x, y, z);
+
+            return GraphicsSettingsFactory.CreateGraphicsSettings(fps, windowResolution, cameraSpeed, cameraPosition, cameraDirection);
+        }
+
         private World.World ParseWorld(XElement world)
         {
-            var renderFps = (int)world.XPathSelectElement("renderFps");
-            var width = (int)world.XPathSelectElement("windowResolution/width");
-            var height = (int)world.XPathSelectElement("windowResolution/height");
-            var windowResolution = new Vector2(width, height);
             var worldSize = (int)world.XPathSelectElement("worldSize");
-            var rotationSpeed = (float)world.XPathSelectElement("rotationSpeed");
+            var numberOfTrees = (int) world.XPathSelectElement("numberOfTrees");
 
-            return WorldFactory.CreateWorld(renderFps, windowResolution, worldSize, rotationSpeed);
+            return WorldFactory.CreateWorld(worldSize, numberOfTrees);
         }
 
         private Time.TimeMachine ParseTimeMachine(XElement timeMachine)
