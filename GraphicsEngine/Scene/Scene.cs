@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Text;
 using Engine.Bird;
 using Engine.ConfigurationLoader;
 using Engine.World;
@@ -24,26 +25,13 @@ namespace GraphicsEngine.Scene
         private readonly IList<IRenderable> _objects = new List<IRenderable>();
 
         private readonly Camera.Camera _camera;
-
-        private readonly IDictionary<string, Text> _messages = new Dictionary<string, Text>();
+        private readonly Text _debugText;
 
         private readonly WorldCube _worldCube;
 
         public Scene(GraphicsSettings graphicsSettings, World world, IEnumerable<Bird> birds)
         {
             _graphicsSettings = graphicsSettings;
-            _world = world;
-            _camera = new Camera.Camera(_graphicsSettings.CameraSpeed, _graphicsSettings.MaxVerticalAngle, _graphicsSettings.MaxHorizontalAngle,
-                _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection);
-
-            birds.ToList().ForEach(bird => _objects.Add(new BirdModel(bird, _world.WorldSize)));
-
-            var random = new Random();
-            for (var i = 0; i < _world.NumberOfTrees; i++)
-            {
-                _objects.Add(new TreeModel(new Vector3((float)random.NextDouble() * _world.WorldSize * 2, 0, (float)random.NextDouble() * _world.WorldSize * 2), _world.WorldSize));
-            }
-
             _scene = new GameWindow(Convert.ToInt32(_graphicsSettings.WindowResolution.X), Convert.ToInt32(_graphicsSettings.WindowResolution.Y), new GraphicsMode(32, 32, 0, 24), "Bird Simulator");
             _scene.Load += Load;
             _scene.Resize += Resize;
@@ -51,13 +39,26 @@ namespace GraphicsEngine.Scene
             _scene.RenderFrame += RenderFrame;
             _scene.VSync = VSyncMode.On;
 
-            _worldCube = new WorldCube(_world.WorldSize*2);
+            _world = world;
+            _worldCube = new WorldCube(_world.WorldSize * 2);
 
-            //_messages.Add("MousePosition", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 0), "Mouse Position "));
-            //_messages.Add("MouseInput", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 20), "Mouse Input"));
-            _messages.Add("CameraPosition", new Text(new Size((int)_graphicsSettings.WindowResolution.X, (int)_graphicsSettings.WindowResolution.Y), new Size(480, 20), new Point(0, 40), "Camera Position"));
-            //_messages.Add("CameraDirection", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 60), "Camera Direction"));
-            //_messages.Add("CameraTarget", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 80), "Camera Target"));
+            _camera = new Camera.Camera(_graphicsSettings.CameraSpeed, _graphicsSettings.MaxVerticalAngle, _graphicsSettings.MaxHorizontalAngle,
+                _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection);
+           
+            birds.ToList().ForEach(bird => _objects.Add(new BirdModel(bird, _world.WorldSize)));
+            RandomizeTrees();
+
+            _debugText = new Text(new Size((int)_graphicsSettings.WindowResolution.X, (int)_graphicsSettings.WindowResolution.Y), new Size(240, 40), new Point(0, 0), String.Empty);
+        }
+
+        private void RandomizeTrees()
+        {
+            var random = new Random();
+            for (var i = 0; i < _world.NumberOfTrees; i++)
+            {
+                _objects.Add(new TreeModel(new Vector3((float) random.NextDouble()*_world.WorldSize*2, 0, 
+                        (float) random.NextDouble()*_world.WorldSize*2), _world.WorldSize));
+            }
         }
 
         public void StartRendering()
@@ -115,22 +116,20 @@ namespace GraphicsEngine.Scene
             {
                 _camera.MoveRight();
             }
+            if (_scene.Keyboard[Key.R])
+            {
+                _debugText.UpdateText();
+            }
         }
 
-        private void UpdateMessages()
+        private void UpdateDebugMessage()
         {
-            //_messages["MousePosition"].Content = String.Format("Mouse Positon: ({0}, {1})", _scene.Mouse.X, _scene.Mouse.Y);
-            //_messages["MouseInput"].Content = String.Format("Mouse Input: ({0}, {1})",
-            //    (_scene.Mouse.X - (_world.WindowResolution.X / 2)) / (_world.WindowResolution.X / 2) * 180 * -1,
-            //    -(_scene.Mouse.Y - (_world.WindowResolution.Y / 2)) / (_world.WindowResolution.Y / 2) * 180 * -1);
-            //_messages["MouseInput"].UpdateText();
-            //_messages["CameraPosition"].Content = String.Format("Camera Positon: ({0}, {1}, {2})", _camera.Position.X,
-            //    _camera.Position.Y, _camera.Position.Z);
-            //_messages["CameraPosition"].UpdateText();
-            //_messages["CameraDirection"].Content = String.Format("Camera Direction: ({0}, {1}, {2})", _camera.Direction.X,
-            //    _camera.Direction.Y, _camera.Direction.Z);
-            //_messages["CameraTarget"].Content = String.Format("Camera Target: ({0}, {1}, {2})", _camera.Target.X,
-            //    _camera.Target.Y, _camera.Target.Z);
+            var debugMessage = new StringBuilder();
+            debugMessage.AppendFormat("CP:({0:F}, {1:F}, {2:F})\n", _camera.Position.X,
+                _camera.Position.Y, _camera.Position.Z);
+            debugMessage.AppendFormat("CD:({0:F}, {1:F}, {2:F})\n", _camera.Direction.X,
+                _camera.Direction.Y, _camera.Direction.Z);
+            _debugText.Content = debugMessage.ToString();
         }
 
         private void RenderFrame(object sender, FrameEventArgs e)
@@ -158,11 +157,7 @@ namespace GraphicsEngine.Scene
         private void RenderObjects()
         {
             _worldCube.Render();
-
-            foreach (var message in _messages)
-            {
-                message.Value.Draw();
-            }
+            _debugText.Render();
 
             foreach (var obj in _objects)
             {
@@ -171,7 +166,7 @@ namespace GraphicsEngine.Scene
                 obj.Render();
                 GL.PopMatrix();
             }
-            UpdateMessages();
+            UpdateDebugMessage();
         }
     }
 }

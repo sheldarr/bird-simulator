@@ -69,7 +69,7 @@ namespace Utilities.Text
             Bitmap.UnlockBits(data);
         }
 
-        public void Draw()
+        public void Render()
         {
             GL.PushMatrix();
             GL.LoadIdentity();

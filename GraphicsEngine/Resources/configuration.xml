@@ -10,16 +10,16 @@
 	  <maxVerticalAngle>89</maxVerticalAngle>
 	  <maxHorizontalAngle>270</maxHorizontalAngle>
 	  <position>
-        <x>-200</x>
-        <y>-200</y>
-        <z>-200</z>
+        <x>-195</x>
+        <y>-195</y>
+        <z>-195</z>
       </position>
       <direction>
         <x>-3</x>
         <y>-3</y>
         <z>-3</z>
       </direction>
-	  </camera>
+	</camera>
   </graphicsSettings>
 
   <world>
@@ -116,6 +116,27 @@
       <strategy type="followThatGuy">
         <birdToFollow>Maciek</birdToFollow>
         <minDistance>25</minDistance>
+      </strategy>
+    </bird>
+	
+	<bird>
+      <name>Ulryk</name>
+      <position>
+        <x>0</x>
+        <y>0</y>
+        <z>100</z>
+      </position>
+      <direction>
+        <x>0</x>
+        <y>-1</y>
+        <z>-1</z>
+      </direction>
+      <statistics>
+        <speed>0.3</speed>
+      </statistics>
+      <strategy type="followThatGuy">
+        <birdToFollow>Maciek</birdToFollow>
+        <minDistance>75</minDistance>
       </strategy>
     </bird>
   </birds>
