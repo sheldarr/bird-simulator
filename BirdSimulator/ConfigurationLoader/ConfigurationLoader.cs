@@ -46,8 +46,6 @@ namespace Engine.ConfigurationLoader
                 }
                 catch (Exception e)
                 {
-                    DebugLog.DebugLog.WriteLine("Parsing error!");
-                    DebugLog.DebugLog.WriteLine(e.ToString());
                 }
             }
 
@@ -56,8 +54,6 @@ namespace Engine.ConfigurationLoader
 
         private World.World ParseWorld(XElement world)
         {
-            DebugLog.DebugLog.WriteLine("Parsing world...");
-
             var renderFps = (int)world.XPathSelectElement("renderFps");
             var width = (int)world.XPathSelectElement("windowResolution/width");
             var height = (int)world.XPathSelectElement("windowResolution/height");
@@ -65,23 +61,18 @@ namespace Engine.ConfigurationLoader
             var worldSize = (int)world.XPathSelectElement("worldSize");
             var rotationSpeed = (float)world.XPathSelectElement("rotationSpeed");
 
-            DebugLog.DebugLog.WriteLine("Parsing successfull!");
             return WorldFactory.CreateWorld(renderFps, windowResolution, worldSize, rotationSpeed);
         }
 
         private Time.TimeMachine ParseTimeMachine(XElement timeMachine)
         {
-            DebugLog.DebugLog.WriteLine("Parsing time machine...");
-
             var quantum = (int)timeMachine.XPathSelectElement("quantum");
 
-            DebugLog.DebugLog.WriteLine("Parsing successfull!");
             return TimeMachineFactory.CreateTimeMachine(quantum);
         }
 
         private Bird.Bird ParseBird(XElement bird)
         {
-            DebugLog.DebugLog.WriteLine("Parsing bird...");
             var name = (string) bird.XPathSelectElement("name");
 
             var x = (float)bird.XPathSelectElement("position/x");
@@ -99,7 +90,6 @@ namespace Engine.ConfigurationLoader
             var statistics = ParseStatistics(bird.XPathSelectElement("statistics"));
             var strategy = ParseStrategy(bird.XPathSelectElement("strategy"));
 
-            DebugLog.DebugLog.WriteLine("Parsing successfull!");
             return BirdFactory.CreateBird(name, position, direction, statistics, strategy);
         }
 

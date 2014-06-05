@@ -85,8 +85,7 @@ namespace Utilities.Text
             GL.Enable(EnableCap.Texture2D);
             GL.BindTexture(TextureTarget.Texture2D, _textureId);
 
-
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0, 0); GL.Vertex2(Position.X, Position.Y);
             GL.TexCoord2(1, 0); GL.Vertex2(Position.X + Bitmap.Width, Position.Y);
             GL.TexCoord2(1, 1); GL.Vertex2(Position.X + Bitmap.Width, Position.Y + Bitmap.Height);

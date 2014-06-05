@@ -57,7 +57,6 @@
     <Compile Include="Bird\Statistics.cs" />
     <Compile Include="ConfigurationLoader\ConfigurationLoader.cs" />
     <Compile Include="ConfigurationLoader\IConfigurationLoader.cs" />
-    <Compile Include="DebugLog\DebugLog.cs" />
     <Compile Include="ExternalConditions\Fog.cs" />
     <Compile Include="ExternalConditions\Wind.cs" />
     <Compile Include="Factories\BirdFactory.cs" />
@@ -79,6 +78,7 @@
     <Compile Include="World\World.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DebugLog\" />
     <Folder Include="EnvironmentalConditions\" />
   </ItemGroup>
   <ItemGroup>
