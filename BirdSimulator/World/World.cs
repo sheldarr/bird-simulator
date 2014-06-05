@@ -1,6 +1,4 @@
-﻿using OpenTK;
-
-namespace Engine.World
+﻿namespace Engine.World
 {
     public class World
     {

@@ -140,4 +140,41 @@
       </strategy>
     </bird>
   </birds>
+  
+  <anomalies>
+	<anomaly>
+	  <size>20</size>
+	  <position>
+        <x>140</x>
+        <y>180</y>
+        <z>160</z>
+      </position>
+	  <effects>
+		<effect type="slowdown">
+			<intensity>0.5</intensity>
+		</effect>
+	  </effects>
+	</anomaly>
+	
+	<anomaly>
+	  <size>30</size>
+	  <position>
+        <x>100</x>
+        <y>160</y>
+        <z>160</z>
+      </position>
+	  <effects>
+		<effect type="push">
+			<direction>
+				<x>2</x>
+				<y>0</y>
+				<z>0</z>
+			</direction>
+		</effect>
+		<effect type="acceleration">
+			<intensity>0.05</intensity>
+		</effect>
+	  </effects>
+	</anomaly>
+  </anomalies>
 </configuration>

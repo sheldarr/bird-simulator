@@ -53,21 +53,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anomaly\Anomaly.cs" />
     <Compile Include="Bird\Bird.cs" />
     <Compile Include="Bird\Statistics.cs" />
     <Compile Include="ConfigurationLoader\ConfigurationLoader.cs" />
     <Compile Include="ConfigurationLoader\GraphicsSettings.cs" />
-    <Compile Include="ConfigurationLoader\IConfigurationLoader.cs" />
-    <Compile Include="ExternalConditions\Fog.cs" />
-    <Compile Include="ExternalConditions\Wind.cs" />
+    <Compile Include="Effects\Acceleration.cs" />
+    <Compile Include="Effects\Effects.cs" />
+    <Compile Include="Effects\NoEffect.cs" />
+    <Compile Include="Effects\Push.cs" />
+    <Compile Include="Factories\AnomalyFactory.cs" />
+    <Compile Include="Factories\EffectsFactory.cs" />
+    <Compile Include="Interfaces\IConfigurationLoader.cs" />
+    <Compile Include="Effects\Slowdown.cs" />
     <Compile Include="Factories\BirdFactory.cs" />
     <Compile Include="Factories\GraphicsSettingsFactory.cs" />
     <Compile Include="Factories\StatisticsFactory.cs" />
     <Compile Include="Factories\StrategyFactoryWithBirdsMemory.cs" />
     <Compile Include="Factories\TimeMachineFactory.cs" />
     <Compile Include="Factories\WorldFactory.cs" />
-    <Compile Include="Interfaces\IEnvironmentalCondition.cs" />
-    <Compile Include="Interfaces\IExternalCondition.cs" />
+    <Compile Include="Interfaces\IEffect.cs" />
     <Compile Include="Interfaces\IStrategy.cs" />
     <Compile Include="Interfaces\ITimeTraveler.cs" />
     <Compile Include="Observer\Observer.cs" />
@@ -81,7 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DebugLog\" />
-    <Folder Include="EnvironmentalConditions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">

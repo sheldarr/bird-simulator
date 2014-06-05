@@ -17,7 +17,7 @@ namespace Engine.Strategies
             direction.X = _flightVector.X;
             direction.Y = _flightVector.Y;
             direction.Z = _flightVector.Z;
-            position += _flightVector * statistics.Speed;
+            position += _flightVector * statistics.Speed * statistics.SpeedModificator;
         }
 
         public new string ToString()

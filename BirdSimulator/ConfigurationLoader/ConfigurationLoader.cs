@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Engine.Bird;
+using Engine.Effects;
 using Engine.Factories;
 using Engine.Interfaces;
 using Engine.Time;
@@ -41,7 +43,7 @@ namespace Engine.ConfigurationLoader
             return ParseTimeMachine(timeMachine);
         }
 
-        public IList<Bird.Bird> LoadBirds()
+        public List<Bird.Bird> LoadBirds()
         {
             var birds = _configurationDocument.XPathSelectElements("birds/bird");
             foreach (var bird in birds)
@@ -55,7 +57,26 @@ namespace Engine.ConfigurationLoader
                 }
             }
 
-            return _loadedBirds;
+            return _loadedBirds.ToList();
+        }
+
+        public List<Anomaly.Anomaly> LoadAnomalies()
+        {
+            var anomalies = _configurationDocument.XPathSelectElements("anomalies/anomaly");
+            var anomaliesList = new List<Anomaly.Anomaly>();
+
+            foreach (var anomaly in anomalies)
+            {
+                try
+                {
+                    anomaliesList.Add(ParseAnomaly(anomaly));
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
+            return anomaliesList;
         }
 
         private GraphicsSettings ParseGraphicsSettings(XElement graphicsSettings)
@@ -116,6 +137,47 @@ namespace Engine.ConfigurationLoader
             var strategy = ParseStrategy(bird.XPathSelectElement("strategy"));
 
             return BirdFactory.CreateBird(name, position, direction, statistics, strategy);
+        }
+
+        private Anomaly.Anomaly ParseAnomaly(XElement anomaly)
+        {
+            var size = (float)anomaly.XPathSelectElement("size");
+
+            var x = (float)anomaly.XPathSelectElement("position/x");
+            var y = (float)anomaly.XPathSelectElement("position/y");
+            var z = (float)anomaly.XPathSelectElement("position/z");
+            var position = new Vector3(x, y, z);
+
+            var effects = anomaly.XPathSelectElements("effects/effect").Select(ParseEffect).ToList();
+
+            return AnomalyFactory.CreateAnomaly(size, position, effects);
+        }
+
+        private IEffect ParseEffect(XElement effect)
+        {
+            var typeAttribute = (string)effect.Attribute("type");
+            Effects.Effects effectType;
+            Enum.TryParse(typeAttribute, true, out effectType);
+
+            switch (effectType)
+            {
+                case Effects.Effects.Acceleration:
+                    var acceleratonIntensity = (float)effect.XPathSelectElement("intensity");
+                    return new Acceleration(acceleratonIntensity);
+
+                case Effects.Effects.Push:
+                    var x = (float)effect.XPathSelectElement("direction/x");
+                    var y = (float)effect.XPathSelectElement("direction/y");
+                    var z = (float)effect.XPathSelectElement("direction/z");
+                    var direction = new Vector3(x, y, z);
+                    return  new Push(direction);
+
+                case Effects.Effects.Slowdown:
+                    var slowdownIntensity = (float)effect.XPathSelectElement("intensity");
+                    return new Slowdown(slowdownIntensity);
+            }
+
+            return new NoEffect();
         }
 
         private Statistics ParseStatistics(XElement statistics)

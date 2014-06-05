@@ -8,6 +8,7 @@ namespace Engine.ConfigurationLoader
         GraphicsSettings LoadGraphicsSettings();
         World.World LoadWorld();
         TimeMachine LoadTimeMachine();
-        IList<Bird.Bird> LoadBirds();
+        List<Bird.Bird> LoadBirds();
+        List<Anomaly.Anomaly> LoadAnomalies();
     }
 }

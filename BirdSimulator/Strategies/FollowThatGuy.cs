@@ -19,9 +19,9 @@ namespace Engine.Strategies
         public void Move(ref Vector3 position, ref Vector3 direction, Statistics statistics)
         {
             direction = (_guide.Position - position).Normalized();
-            var estimatedPosition = GetPosition(position, direction, statistics.Speed);
+            var estimatedPosition = GetPosition(position, direction, statistics.Speed*statistics.SpeedModificator);
             var estimatedDistance = DistanceBetweenPoints(estimatedPosition, _guide.Position);
-            position = (estimatedDistance >= _minDistance) ? estimatedPosition : FindClosestPositionToGuide(position, direction, statistics.Speed);
+            position = (estimatedDistance >= _minDistance) ? estimatedPosition : FindClosestPositionToGuide(position, direction, statistics.Speed*statistics.SpeedModificator);
         }
 
         private Vector3 GetPosition(Vector3 position, Vector3 direction, float speed)

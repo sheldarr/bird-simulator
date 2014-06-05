@@ -12,8 +12,9 @@ namespace GraphicsEngine
             var world = configurationLoader.LoadWorld();
             var timeMachine = configurationLoader.LoadTimeMachine();
             var birds = configurationLoader.LoadBirds();
+            var anomalies = configurationLoader.LoadAnomalies();
 
-            var observer = new Observer();
+            var observer = new Observer(world, anomalies);
 
             foreach (var bird in birds)
             {
@@ -23,7 +24,7 @@ namespace GraphicsEngine
 
             timeMachine.Enabled = true;
 
-            using (var simulationScene = new Scene.Scene(graphicsSettings, world, birds))
+            using (var simulationScene = new Scene.Scene(graphicsSettings, world, birds, anomalies))
             {
                 simulationScene.StartRendering();
             }

@@ -1,6 +1,4 @@
-﻿using OpenTK;
-
-namespace Engine.Factories
+﻿namespace Engine.Factories
 {
     public static class WorldFactory
     {

@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Anomaly\AnomalyModel.cs" />
     <Compile Include="Models\BirdModel.cs" />
     <Compile Include="Models\TreeModel.cs" />
     <Compile Include="Shapes\Cube.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using Engine.Anomaly;
 using Engine.Bird;
 using Engine.ConfigurationLoader;
 using Engine.World;
@@ -10,6 +11,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using Utilities.Anomaly;
 using Utilities.Interfaces;
 using Utilities.Models;
 using Utilities.Shapes;
@@ -29,7 +31,7 @@ namespace GraphicsEngine.Scene
 
         private readonly WorldCube _worldCube;
 
-        public Scene(GraphicsSettings graphicsSettings, World world, IEnumerable<Bird> birds)
+        public Scene(GraphicsSettings graphicsSettings, World world, IEnumerable<Bird> birds, IEnumerable<Anomaly> anomalies)
         {
             _graphicsSettings = graphicsSettings;
             _scene = new GameWindow(Convert.ToInt32(_graphicsSettings.WindowResolution.X), Convert.ToInt32(_graphicsSettings.WindowResolution.Y), new GraphicsMode(32, 32, 0, 24), "Bird Simulator");
@@ -46,6 +48,7 @@ namespace GraphicsEngine.Scene
                 _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection);
            
             birds.ToList().ForEach(bird => _objects.Add(new BirdModel(bird, _world.WorldSize)));
+            anomalies.ToList().ForEach(anomaly => _objects.Add(new AnomalyModel(anomaly)));
             RandomizeTrees();
 
             _debugText = new Text(new Size((int)_graphicsSettings.WindowResolution.X, (int)_graphicsSettings.WindowResolution.Y), new Size(240, 40), new Point(0, 0), String.Empty);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Engine.Interfaces;
 using NLog;
 using OpenTK;
@@ -13,25 +12,26 @@ namespace Engine.Bird
         public Vector3 Position;
         public Vector3 Direction;
 
-        public event Bird.BirdUpdate OnUpdate;
+        public event Bird.BirdUpdate OnTick;
         public delegate void BirdUpdate(Bird bird, EventArgs e);
   
-        private readonly Statistics _statistics;
+        public readonly Statistics Statistics;
      
         private readonly IStrategy _strategy;
-        private IEnumerable<IExternalCondition> _externalConditions;
 
         public Bird(Vector3 position, Vector3 direction, Statistics statistics, IStrategy strategy)
         {
             Position = position;
             Direction = direction;
-            _statistics = statistics;
+            Statistics = statistics;
             _strategy = strategy;
         }
 
         public void Tick()
         {
-            _strategy.Move(ref Position, ref Direction, _statistics);
+            OnTick(this, new EventArgs());
+            _strategy.Move(ref Position, ref Direction, Statistics);
+            Statistics.ResetModificators();
             var log = LogManager.GetCurrentClassLogger();
             log.Trace("{0} moved to ({1};{2};{3}), direction = ({4};{5};{6})", Id, Position.X, Position.Y, Position.Z, Direction.X, Direction.Y, Direction.Z);
             log.Trace("{0} is following strategy: {1}", Id, _strategy.ToString());
