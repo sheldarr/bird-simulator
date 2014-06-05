@@ -51,7 +51,7 @@ namespace GraphicsEngine.Scene
 
             //_messages.Add("MousePosition", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 0), "Mouse Position "));
             //_messages.Add("MouseInput", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 20), "Mouse Input"));
-            //_messages.Add("CameraPosition", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 40), "Camera Position"));
+            _messages.Add("CameraPosition", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 40), "Camera Position"));
             //_messages.Add("CameraDirection", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 60), "Camera Direction"));
             //_messages.Add("CameraTarget", new Text(new Size((int)_world.WindowResolution.X, (int)_world.WindowResolution.Y), new Size(480, 20), new Point(0, 80), "Camera Target"));
         }
@@ -159,9 +159,9 @@ namespace GraphicsEngine.Scene
             //    (_scene.Mouse.X - (_world.WindowResolution.X / 2)) / (_world.WindowResolution.X / 2) * 180 * -1,
             //    -(_scene.Mouse.Y - (_world.WindowResolution.Y / 2)) / (_world.WindowResolution.Y / 2) * 180 * -1);
             //_messages["MouseInput"].UpdateText();
-            //_messages["CameraPosition"].Content = String.Format("Camera Positon: ({0}, {1}, {2})", _camera.Position.X,
-            //    _camera.Position.Y, _camera.Position.Z);
-            //_messages["CameraPosition"].UpdateText();
+            _messages["CameraPosition"].Content = String.Format("Camera Positon: ({0}, {1}, {2})", _camera.Position.X,
+                _camera.Position.Y, _camera.Position.Z);
+            _messages["CameraPosition"].UpdateText();
             //_messages["CameraDirection"].Content = String.Format("Camera Direction: ({0}, {1}, {2})", _camera.Direction.X,
             //    _camera.Direction.Y, _camera.Direction.Z);
             //_messages["CameraTarget"].Content = String.Format("Camera Target: ({0}, {1}, {2})", _camera.Target.X,

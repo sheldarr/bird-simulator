@@ -24,7 +24,7 @@ namespace Utilities.Shapes
             GL.Enable(EnableCap.Texture2D);
 
             GL.BindTexture(TextureTarget.Texture2D, _skyTexture);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0, 1); GL.Vertex3(-Size, Size, Size);
             GL.TexCoord2(0, 0); GL.Vertex3(Size, Size, Size);
             GL.TexCoord2(1, 0); GL.Vertex3(Size, Size, -Size);
@@ -32,7 +32,7 @@ namespace Utilities.Shapes
             GL.End();
 
             GL.BindTexture(TextureTarget.Texture2D, _skyTexture);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0, 0); GL.Vertex3(-Size, Size, -Size);
             GL.TexCoord2(1, 0); GL.Vertex3(Size, Size, -Size);
             GL.TexCoord2(1, 1); GL.Vertex3(Size, -Size, -Size);
@@ -40,7 +40,7 @@ namespace Utilities.Shapes
             GL.End();
 
             GL.BindTexture(TextureTarget.Texture2D, _skyTexture);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0, 0); GL.Vertex3(-Size, Size, Size);
             GL.TexCoord2(1, 0); GL.Vertex3(Size, Size, Size);
             GL.TexCoord2(1, 1); GL.Vertex3(Size, -Size, Size);
@@ -48,7 +48,7 @@ namespace Utilities.Shapes
             GL.End();
 
             GL.BindTexture(TextureTarget.Texture2D, _skyTexture);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0, 1); GL.Vertex3(Size, -Size, Size);
             GL.TexCoord2(0, 0); GL.Vertex3(Size, Size, Size);
             GL.TexCoord2(1, 0); GL.Vertex3(Size, Size, -Size);
@@ -56,7 +56,7 @@ namespace Utilities.Shapes
             GL.End();
 
             GL.BindTexture(TextureTarget.Texture2D, _skyTexture);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0, 1); GL.Vertex3(-Size, -Size, Size);
             GL.TexCoord2(0, 0); GL.Vertex3(-Size, Size, Size);
             GL.TexCoord2(1, 0); GL.Vertex3(-Size, Size, -Size);
@@ -64,7 +64,7 @@ namespace Utilities.Shapes
             GL.End();
 
             GL.BindTexture(TextureTarget.Texture2D, _grassTexture);
-            GL.Begin(BeginMode.Quads);
+            GL.Begin(PrimitiveType.Quads);
             GL.TexCoord2(0, 0); GL.Vertex3(-Size, -Size, Size);
             GL.TexCoord2(1, 0); GL.Vertex3(Size, -Size, Size);
             GL.TexCoord2(1, 1); GL.Vertex3(Size, -Size, -Size);

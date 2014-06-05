@@ -20,17 +20,17 @@ namespace Utilities.ObjModel
             Prepare();
 
             GL.PushClientAttrib(ClientAttribMask.ClientVertexArrayBit);
-            GL.EnableClientState(EnableCap.VertexArray);
+            GL.EnableClientState(ArrayCap.VertexArray);
             GL.BindBuffer(BufferTarget.ArrayBuffer, _verticesBufferId);
             GL.InterleavedArrays(InterleavedArrayFormat.T2fN3fV3f, Marshal.SizeOf(typeof(ObjVertex)), IntPtr.Zero);
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, _trianglesBufferId);
-            GL.DrawElements(BeginMode.Triangles, Triangles.Length * 3, DrawElementsType.UnsignedInt, IntPtr.Zero);
+            GL.DrawElements(PrimitiveType.Triangles, Triangles.Length * 3, DrawElementsType.UnsignedInt, IntPtr.Zero);
 
             if (Quads.Length > 0)
             {
                 GL.BindBuffer(BufferTarget.ElementArrayBuffer, _quadsBufferId);
-                GL.DrawElements(BeginMode.Quads, Quads.Length * 4, DrawElementsType.UnsignedInt, IntPtr.Zero);
+                GL.DrawElements(PrimitiveType.Quads, Quads.Length * 4, DrawElementsType.UnsignedInt, IntPtr.Zero);
             }
 
             GL.PopClientAttrib();
