@@ -52,5 +52,10 @@ namespace Engine.Strategies
             double dZ = pointB.Z - pointA.Z;
             return Math.Sqrt(dX * dX + dY * dY + dZ * dZ);
         }
+
+        public new string ToString()
+        {
+            return string.Format("following {0}", _guide.Id);
+        }
     }
 }

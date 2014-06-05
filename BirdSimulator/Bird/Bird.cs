@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Engine.Interfaces;
+using NLog;
 using OpenTK;
 
 namespace Engine.Bird
@@ -32,7 +33,9 @@ namespace Engine.Bird
         public void Tick()
         {
             _strategy.Move(ref Position, ref Direction, _statistics);
-            OnUpdate(this, new EventArgs());
+            var log = LogManager.GetCurrentClassLogger();
+            log.Trace("{0} moved to ({1};{2};{3}), direction = ({4};{5};{6})", Id, Position.X, Position.Y, Position.Z, Direction.X, Direction.Y, Direction.Z);
+            log.Trace("{0} is following strategy: {1}", Id, _strategy.ToString());
         }
     }
 }

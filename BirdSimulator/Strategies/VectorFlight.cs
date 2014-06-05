@@ -19,6 +19,12 @@ namespace Engine.Strategies
             direction.Z = _flightVector.Z;
             position += _flightVector * statistics.Speed;
         }
+
+        public new string ToString()
+        {
+            return string.Format("vectorflight with vector ({0};{1};{2})", _flightVector.X, _flightVector.Y,
+                _flightVector.Z);
+        }
     }
 }
 

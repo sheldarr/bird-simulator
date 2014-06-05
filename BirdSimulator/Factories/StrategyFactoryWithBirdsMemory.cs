@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
 using Engine.Interfaces;
@@ -32,9 +33,9 @@ namespace Engine.Factories
                     var flightVector = new Vector3(x, y, z);
                     return new VectorFlight(flightVector);
                 case Strategies.Strategies.FollowThatGuy:
-                    var birdToFollow = (int) strategyElement.XPathSelectElement("birdToFollow");
+                    var birdToFollow = (string) strategyElement.XPathSelectElement("birdToFollow");
                     var minDistance = (double) strategyElement.XPathSelectElement("minDistance");
-                    return new FollowThatGuy(_birds[birdToFollow], minDistance);
+                    return new FollowThatGuy(_birds.First(b => b.Id == birdToFollow), minDistance);
             }
 
             return new NoStrategy();
