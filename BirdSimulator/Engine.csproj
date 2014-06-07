@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Anomaly\Anomaly.cs" />
     <Compile Include="Bird\Bird.cs" />
+    <Compile Include="Bird\ConeOfVision.cs" />
     <Compile Include="Bird\Statistics.cs" />
     <Compile Include="ConfigurationLoader\ConfigurationLoader.cs" />
     <Compile Include="ConfigurationLoader\GraphicsSettings.cs" />
@@ -64,6 +65,9 @@
     <Compile Include="Effects\Push.cs" />
     <Compile Include="Factories\AnomalyFactory.cs" />
     <Compile Include="Factories\EffectsFactory.cs" />
+    <Compile Include="Halp\Maths3D.cs" />
+    <Compile Include="Halp\Point.cs" />
+    <Compile Include="Halp\Vertex.cs" />
     <Compile Include="Interfaces\IConfigurationLoader.cs" />
     <Compile Include="Effects\Slowdown.cs" />
     <Compile Include="Factories\BirdFactory.cs" />

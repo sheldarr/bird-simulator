@@ -46,6 +46,10 @@
       </direction>
       <statistics>
         <speed>0.2</speed>
+        <visionCone>
+          <aperture>150</aperture>
+          <viewDistance>3</viewDistance>
+        </visionCone>
       </statistics>
       <strategy type="vectorFlight">
         <flightVector>
@@ -70,6 +74,10 @@
       </direction>
       <statistics>
         <speed>0.5</speed>
+        <visionCone>
+          <aperture>100</aperture>
+          <viewDistance>2.4</viewDistance>
+        </visionCone>
       </statistics>
       <strategy type="followThatGuy">
         <birdToFollow>Maciek</birdToFollow>
@@ -91,6 +99,10 @@
       </direction>
       <statistics>
         <speed>0.5</speed>
+        <visionCone>
+          <aperture>130</aperture>
+          <viewDistance>1.5</viewDistance>
+        </visionCone>
       </statistics>
       <strategy type="followThatGuy">
         <birdToFollow>Maciek</birdToFollow>
@@ -112,6 +124,10 @@
       </direction>
       <statistics>
         <speed>0.5</speed>
+        <visionCone>
+          <aperture>120</aperture>
+          <viewDistance>6</viewDistance>
+        </visionCone>
       </statistics>
       <strategy type="followThatGuy">
         <birdToFollow>Maciek</birdToFollow>
@@ -133,6 +149,10 @@
       </direction>
       <statistics>
         <speed>0.3</speed>
+        <visionCone>
+          <aperture>210</aperture>
+          <viewDistance>12</viewDistance>
+        </visionCone>
       </statistics>
       <strategy type="followThatGuy">
         <birdToFollow>Maciek</birdToFollow>

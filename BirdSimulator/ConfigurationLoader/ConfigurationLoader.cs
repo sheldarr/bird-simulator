@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using Engine.Bird;
 using Engine.Effects;
 using Engine.Factories;
 using Engine.Interfaces;
@@ -132,8 +131,8 @@ namespace Engine.ConfigurationLoader
             z = (float)bird.XPathSelectElement("direction/z");
 
             var direction = new Vector3(x, y, z);
-            
-            var statistics = ParseStatistics(bird.XPathSelectElement("statistics"));
+
+            var statistics = StatisticsFactory.CreateStatistics(position, direction, bird.XPathSelectElement("statistics")); ;
             var strategy = ParseStrategy(bird.XPathSelectElement("strategy"));
 
             return BirdFactory.CreateBird(name, position, direction, statistics, strategy);
@@ -178,12 +177,6 @@ namespace Engine.ConfigurationLoader
             }
 
             return new NoEffect();
-        }
-
-        private Statistics ParseStatistics(XElement statistics)
-        {
-            var speed = (float)statistics.XPathSelectElement("speed");
-            return StatisticsFactory.CreateStatistics(speed);
         }
 
         private IStrategy ParseStrategy(XElement strategy)
