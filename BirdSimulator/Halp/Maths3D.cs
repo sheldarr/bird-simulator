@@ -11,5 +11,15 @@ namespace Engine.Halp
             double dZ = pointB.Z - pointA.Z;
             return Math.Sqrt(dX * dX + dY * dY + dZ * dZ);
         }
+
+        public static double Angle(Vector a, Vector b)
+        {
+            return Math.Acos(DotProduct(a, b)/(a.Length*b.Length));
+        }
+
+        public static double DotProduct(Vector a, Vector b)
+        {
+            return a.X*b.X + a.Y*b.Y + a.Z*b.Z;
+        }
     }
 }

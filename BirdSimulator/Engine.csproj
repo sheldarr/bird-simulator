@@ -37,6 +37,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.0.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -55,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Anomaly\Anomaly.cs" />
     <Compile Include="Bird\Bird.cs" />
-    <Compile Include="Bird\ConeOfVision.cs" />
+    <Compile Include="Bird\VisionCone.cs" />
     <Compile Include="Bird\Statistics.cs" />
     <Compile Include="ConfigurationLoader\ConfigurationLoader.cs" />
     <Compile Include="ConfigurationLoader\GraphicsSettings.cs" />
@@ -65,15 +68,16 @@
     <Compile Include="Effects\Push.cs" />
     <Compile Include="Factories\AnomalyFactory.cs" />
     <Compile Include="Factories\EffectsFactory.cs" />
+    <Compile Include="Halp\Defaults.cs" />
     <Compile Include="Halp\Maths3D.cs" />
     <Compile Include="Halp\Point.cs" />
-    <Compile Include="Halp\Vertex.cs" />
+    <Compile Include="Halp\Vector.cs" />
     <Compile Include="Interfaces\IConfigurationLoader.cs" />
     <Compile Include="Effects\Slowdown.cs" />
     <Compile Include="Factories\BirdFactory.cs" />
     <Compile Include="Factories\GraphicsSettingsFactory.cs" />
     <Compile Include="Factories\StatisticsFactory.cs" />
-    <Compile Include="Factories\StrategyFactoryWithBirdsMemory.cs" />
+    <Compile Include="Factories\StrategyFactory.cs" />
     <Compile Include="Factories\TimeMachineFactory.cs" />
     <Compile Include="Factories\WorldFactory.cs" />
     <Compile Include="Interfaces\IEffect.cs" />
@@ -81,6 +85,7 @@
     <Compile Include="Interfaces\ITimeTraveler.cs" />
     <Compile Include="Observer\Observer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\FollowClosestYouSee.cs" />
     <Compile Include="Strategies\FollowThatGuy.cs" />
     <Compile Include="Strategies\NoStrategy.cs" />
     <Compile Include="Strategies\Strategies.cs" />
@@ -88,9 +93,7 @@
     <Compile Include="Time\TimeMachine.cs" />
     <Compile Include="World\World.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DebugLog\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

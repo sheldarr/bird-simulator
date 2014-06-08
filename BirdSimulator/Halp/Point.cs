@@ -1,18 +1,42 @@
-﻿using OpenTK;
+﻿using Newtonsoft.Json;
+using OpenTK;
 
 namespace Engine.Halp
 {
-    class Point
+    [JsonObject(MemberSerialization.OptOut)]
+    public class Point
     {
         public double X { get; private set; }
         public double Y { get; private set; }
         public double Z { get; private set; }
 
-        public Point(Vector3 vector)
+        public Point(double x, double y, double z)
         {
-            X = vector.X;
-            Y = vector.Y;
-            Z = vector.Z;
+            X = x;
+            Y = y;
+            Z = z;
+        }
+
+        public Point(Vector3 vector) : this(vector.X, vector.Y, vector.Z)
+        {
+        }
+
+        [JsonIgnore]
+        public static Point Origin
+        {
+            get
+            {
+                return new Point(0.0, 0.0, 0.0);
+            }
+        }
+
+        [JsonIgnore]
+        public Vector3 OglVector
+        {
+            get
+            {
+                return new Vector3((float)X, (float)Y, (float)Z);
+            }
         }
     }
 }

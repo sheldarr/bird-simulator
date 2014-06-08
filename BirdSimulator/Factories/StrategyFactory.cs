@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -9,13 +8,13 @@ using OpenTK;
 
 namespace Engine.Factories
 {
-    class StrategyFactoryWithBirdsMemory
+    public class StrategyFactory
     {
-        private readonly IList<Bird.Bird> _birds;
+        private readonly Observer.Observer _observer;
  
-        public StrategyFactoryWithBirdsMemory(IList<Bird.Bird> birds)
+        public StrategyFactory(Observer.Observer observer)
         {
-            _birds = birds;
+            _observer = observer;
         }
 
         public IStrategy GetStrategy(XElement strategyElement)
@@ -35,7 +34,9 @@ namespace Engine.Factories
                 case Strategies.Strategies.FollowThatGuy:
                     var birdToFollow = (string) strategyElement.XPathSelectElement("birdToFollow");
                     var minDistance = (double) strategyElement.XPathSelectElement("minDistance");
-                    return new FollowThatGuy(_birds.First(b => b.Id == birdToFollow), minDistance);
+                    return new FollowThatGuy(_observer.Birds.First(b => b.Id == birdToFollow), minDistance);
+                case Strategies.Strategies.FollowClosestYouSee:
+                    return new FollowClosestYouSee(_observer, (double)strategyElement.XPathSelectElement("minDistance"));
             }
 
             return new NoStrategy();

@@ -1,30 +1,30 @@
 <configuration>
   <graphicsSettings>
-	<fps>30</fps>
-	<windowResolution>
-      <width>1024</width>
-      <height>768</height>
-    </windowResolution>
-	<camera>
-	  <speed>2.0</speed>
-	  <maxVerticalAngle>89</maxVerticalAngle>
-	  <maxHorizontalAngle>270</maxHorizontalAngle>
-	  <position>
-        <x>-195</x>
-        <y>100</y>
-        <z>-195</z>
-      </position>
-      <direction>
-        <x>-3</x>
-        <y>-3</y>
-        <z>-3</z>
-      </direction>
-	</camera>
+	  <fps>30</fps>
+	  <windowResolution>
+        <width>1024</width>
+        <height>768</height>
+      </windowResolution>
+	  <camera>
+	    <speed>2.0</speed>
+	    <maxVerticalAngle>89</maxVerticalAngle>
+	    <maxHorizontalAngle>270</maxHorizontalAngle>
+	    <position>
+          <x>-195</x>
+          <y>100</y>
+          <z>-195</z>
+        </position>
+        <direction>
+          <x>-3</x>
+          <y>-3</y>
+          <z>-3</z>
+        </direction>
+	  </camera>
   </graphicsSettings>
 
   <world>
     <worldSize>100</worldSize>
-	<numberOfTrees>20</numberOfTrees>
+	  <numberOfTrees>20</numberOfTrees>
   </world>
   
   <timeMachine>
@@ -88,77 +88,27 @@
     <bird>
       <name>Krzychu</name>
       <position>
-        <x>0</x>
-        <y>50</y>
-        <z>100</z>
+        <x>100</x>
+        <y>103</y>
+        <z>105</z>
       </position>
       <direction>
         <x>0</x>
-        <y>-1</y>
-        <z>-1</z>
+        <y>1</y>
+        <z>0</z>
       </direction>
       <statistics>
         <speed>0.5</speed>
         <visionCone>
           <aperture>130</aperture>
-          <viewDistance>1.5</viewDistance>
+          <viewDistance>3</viewDistance>
         </visionCone>
       </statistics>
-      <strategy type="followThatGuy">
-        <birdToFollow>Maciek</birdToFollow>
-        <minDistance>50</minDistance>
+      <strategy type="followClosestYouSee">
+        <minDistance>1.5</minDistance>
       </strategy>
     </bird>
 
-    <bird>
-      <name>Olek</name>
-      <position>
-        <x>100</x>
-        <y>50</y>
-        <z>0</z>
-      </position>
-      <direction>
-        <x>0</x>
-        <y>-1</y>
-        <z>-1</z>
-      </direction>
-      <statistics>
-        <speed>0.5</speed>
-        <visionCone>
-          <aperture>120</aperture>
-          <viewDistance>6</viewDistance>
-        </visionCone>
-      </statistics>
-      <strategy type="followThatGuy">
-        <birdToFollow>Maciek</birdToFollow>
-        <minDistance>25</minDistance>
-      </strategy>
-    </bird>
-	
-	<bird>
-      <name>Ulryk</name>
-      <position>
-        <x>0</x>
-        <y>0</y>
-        <z>100</z>
-      </position>
-      <direction>
-        <x>0</x>
-        <y>-1</y>
-        <z>-1</z>
-      </direction>
-      <statistics>
-        <speed>0.3</speed>
-        <visionCone>
-          <aperture>210</aperture>
-          <viewDistance>12</viewDistance>
-        </visionCone>
-      </statistics>
-      <strategy type="followThatGuy">
-        <birdToFollow>Maciek</birdToFollow>
-        <minDistance>75</minDistance>
-      </strategy>
-    </bird>
   </birds>
   
   <anomalies>

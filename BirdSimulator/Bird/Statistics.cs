@@ -4,13 +4,13 @@
     {
         public float Speed { get; set; }
         public float SpeedModificator { get; set; }
-        public ConeOfVision VisionCone { get; set; }
+        public VisionCone VisionVisionCone { get; set; }
 
-        public Statistics(float speed, ConeOfVision visionCone)
+        public Statistics(float speed, VisionCone visionVisionCone)
         {
             Speed = speed;
             SpeedModificator = 1;
-            VisionCone = visionCone;
+            VisionVisionCone = visionVisionCone;
         }
 
         public void ResetModificators()

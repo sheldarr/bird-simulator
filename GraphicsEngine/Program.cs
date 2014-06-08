@@ -1,4 +1,6 @@
-﻿using Engine.ConfigurationLoader;
+﻿using System.Linq;
+using Engine.ConfigurationLoader;
+using Engine.Factories;
 using Engine.Observer;
 
 namespace GraphicsEngine
@@ -9,22 +11,20 @@ namespace GraphicsEngine
         {
             IConfigurationLoader configurationLoader = new ConfigurationLoader(@"Resources\configuration.xml");
             var graphicsSettings = configurationLoader.LoadGraphicsSettings();
-            var world = configurationLoader.LoadWorld();
             var timeMachine = configurationLoader.LoadTimeMachine();
-            var birds = configurationLoader.LoadBirds();
+            var world = configurationLoader.LoadWorld();
             var anomalies = configurationLoader.LoadAnomalies();
 
-            var observer = new Observer(world, anomalies);
+            var observer = new Observer(world);
+            observer.Anomalies.AddRange(anomalies);
+            observer.AddBirds(configurationLoader.LoadBirds());
+            configurationLoader.LoadStrategiesForBirds(observer.Birds, new StrategyFactory(observer));
 
-            foreach (var bird in birds)
-            {
-                observer.Subscribe(bird);
-                timeMachine.AddTraveler(bird);
-            } 
+            observer.Birds.ToList().ForEach(timeMachine.AddTraveler);
 
             timeMachine.Enabled = true;
 
-            using (var simulationScene = new Scene.Scene(graphicsSettings, world, birds, anomalies))
+            using (var simulationScene = new Scene.Scene(graphicsSettings, world, observer.Birds, anomalies))
             {
                 simulationScene.StartRendering();
             }
