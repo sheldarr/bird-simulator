@@ -6,6 +6,7 @@ using System.Text;
 using Engine.Anomaly;
 using Engine.Bird;
 using Engine.ConfigurationLoader;
+using Engine.Strategies;
 using Engine.World;
 using OpenTK;
 using OpenTK.Graphics;
@@ -24,7 +25,8 @@ namespace GraphicsEngine.Scene
         private readonly GraphicsSettings _graphicsSettings;
         private readonly GameWindow _scene;
         private readonly World _world;
-        private readonly IList<IRenderable> _objects = new List<IRenderable>();
+        private readonly List<IRenderable> _objects = new List<IRenderable>();
+        private readonly List<IRenderable> _anomalies = new List<IRenderable>(); 
 
         private readonly Camera.Camera _camera;
         private readonly Text _debugText;
@@ -34,7 +36,7 @@ namespace GraphicsEngine.Scene
         public Scene(GraphicsSettings graphicsSettings, World world, IEnumerable<Bird> birds, IEnumerable<Anomaly> anomalies)
         {
             _graphicsSettings = graphicsSettings;
-            _scene = new GameWindow(Convert.ToInt32(_graphicsSettings.WindowResolution.X), Convert.ToInt32(_graphicsSettings.WindowResolution.Y), new GraphicsMode(32, 32, 0, 24), "Bird Simulator");
+            _scene = new GameWindow(Convert.ToInt32(_graphicsSettings.WindowResolution.X), Convert.ToInt32(_graphicsSettings.WindowResolution.Y), new GraphicsMode(32, 32, 0, 0), "Bird Simulator");
             _scene.Load += Load;
             _scene.Resize += Resize;
             _scene.UpdateFrame += UpdateFrame;
@@ -45,11 +47,11 @@ namespace GraphicsEngine.Scene
             _worldCube = new WorldCube(_world.WorldSize * 2);
 
             _camera = new Camera.Camera(_graphicsSettings.CameraSpeed, _graphicsSettings.MaxVerticalAngle, _graphicsSettings.MaxHorizontalAngle,
-                _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection);
+                _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection, birds.First(bird => bird._strategy.GetType() == typeof(VectorFlight)));
            
             birds.ToList().ForEach(bird => _objects.Add(new BirdModel(bird, _world.WorldSize)));
-            anomalies.ToList().ForEach(anomaly => _objects.Add(new AnomalyModel(anomaly)));
-            RandomizeTrees();
+            anomalies.ToList().ForEach(anomaly => _anomalies.Add(new AnomalyModel(anomaly)));
+            //RandomizeTrees();
 
             _debugText = new Text(new Size((int)_graphicsSettings.WindowResolution.X, (int)_graphicsSettings.WindowResolution.Y), new Size(240, 40), new Point(0, 0), String.Empty);
         }
@@ -159,8 +161,21 @@ namespace GraphicsEngine.Scene
 
         private void RenderObjects()
         {
+
+            GL.PushMatrix();
+            GL.Translate(_camera.FollowingBird.Position.X - _world.WorldSize / 2, _camera.FollowingBird.Position.Y - _world.WorldSize / 2, _camera.FollowingBird.Position.Z - _world.WorldSize / 2);
             _worldCube.Render();
+            GL.PopMatrix();
+      
             _debugText.Render();
+
+            foreach (var anomaly in _anomalies)
+            {
+                GL.PushMatrix();
+                GL.Translate(-_world.WorldSize, -_world.WorldSize, -_world.WorldSize);
+                anomaly.Render();
+                GL.PopMatrix();
+            }
 
             foreach (var obj in _objects)
             {

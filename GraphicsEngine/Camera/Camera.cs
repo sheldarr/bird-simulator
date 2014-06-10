@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using Engine.Bird;
+using OpenTK;
 using Utilities;
 
 namespace GraphicsEngine.Camera
@@ -13,6 +14,8 @@ namespace GraphicsEngine.Camera
         public Vector3 CameraUp { get; set; }
         public Vector3 Direction { get; set; }
 
+        public Bird FollowingBird { get; set; }
+
         public Vector3 Target 
         {
             get { return (Position - Direction); }
@@ -20,7 +23,7 @@ namespace GraphicsEngine.Camera
 
         public Matrix4 LookAt;
 
-        public Camera(float speed, float maxVerticalAngle, float maxHorizontalAngle, Vector3 cameraPosition, Vector3 cameraDirection)
+        public Camera(float speed, float maxVerticalAngle, float maxHorizontalAngle, Vector3 cameraPosition, Vector3 cameraDirection, Bird followingBird)
         {
             Speed = speed;
             MaxVerticalAngle = maxVerticalAngle;
@@ -28,6 +31,8 @@ namespace GraphicsEngine.Camera
 
             Position = cameraPosition;
             Direction = cameraDirection;
+
+            FollowingBird = followingBird;
 
             CameraUp = new Vector3(0, 1, 0);
             LookAt = Matrix4.LookAt(Position, Target, CameraUp);

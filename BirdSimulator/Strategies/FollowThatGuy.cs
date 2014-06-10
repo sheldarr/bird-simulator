@@ -5,7 +5,7 @@ using OpenTK;
 
 namespace Engine.Strategies
 {
-    class FollowThatGuy : IStrategy
+    public class FollowThatGuy : IStrategy
     {
         private readonly Bird.Bird _guide;
         private readonly double _minDistance;

@@ -17,7 +17,7 @@ namespace Engine.Bird
   
         public readonly Statistics Statistics;
      
-        private readonly IStrategy _strategy;
+        public readonly IStrategy _strategy;
 
         public Bird(Vector3 position, Vector3 direction, Statistics statistics, IStrategy strategy)
         {

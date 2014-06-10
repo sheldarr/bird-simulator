@@ -10,9 +10,9 @@
 	  <maxVerticalAngle>89</maxVerticalAngle>
 	  <maxHorizontalAngle>270</maxHorizontalAngle>
 	  <position>
-        <x>-195</x>
+        <x>0</x>
         <y>100</y>
-        <z>-195</z>
+        <z>0</z>
       </position>
       <direction>
         <x>-3</x>
@@ -166,8 +166,8 @@
 	  <effects>
 		<effect type="push">
 			<direction>
-				<x>2</x>
-				<y>0</y>
+				<x>1</x>
+				<y>0.5</y>
 				<z>0.5</z>
 			</direction>
 		</effect>
