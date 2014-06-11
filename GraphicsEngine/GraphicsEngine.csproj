@@ -80,23 +80,7 @@
     <Content Include="Resources\configuration.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\grassTexture.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\horizonTexture.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\leafsTexture.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\skybox.jpg" />
-    <Content Include="Resources\skyboxBack.jpg" />
-    <Content Include="Resources\skyboxDown.jpg" />
-    <Content Include="Resources\skyboxFront.jpg" />
-    <Content Include="Resources\skyboxLeft.jpg" />
-    <Content Include="Resources\skyboxRight.jpg" />
-    <Content Include="Resources\skyboxUp.jpg" />
-    <Content Include="Resources\skyTexture.jpg">
+    <Content Include="Resources\skybox.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
