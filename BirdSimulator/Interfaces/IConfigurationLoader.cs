@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Engine.Factories;
 using Engine.Time;
 
 namespace Engine.ConfigurationLoader
@@ -10,5 +11,6 @@ namespace Engine.ConfigurationLoader
         TimeMachine LoadTimeMachine();
         List<Bird.Bird> LoadBirds();
         List<Anomaly.Anomaly> LoadAnomalies();
+        void LoadStrategiesForBirds(IEnumerable<Bird.Bird> birds, StrategyFactory stratFactory);
     }
 }

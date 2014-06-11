@@ -4,6 +4,7 @@
     {
         NoStrategy,
         VectorFlight,
-        FollowThatGuy
+        FollowThatGuy,
+        FollowClosestYouSee
     }
 }

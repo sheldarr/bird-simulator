@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml.XPath;
-using Engine.Bird;
 using Engine.Effects;
 using Engine.Factories;
 using Engine.Interfaces;
@@ -16,12 +15,10 @@ namespace Engine.ConfigurationLoader
     {
         private readonly XElement _configurationDocument;
         private readonly IList<Bird.Bird> _loadedBirds;
-        private readonly StrategyFactoryWithBirdsMemory _strategyFactory;
 
         public ConfigurationLoader(string configurationPath)
         {
             _loadedBirds = new List<Bird.Bird>();
-            _strategyFactory = new StrategyFactoryWithBirdsMemory(_loadedBirds);
             _configurationDocument = XElement.Load(configurationPath);
         }
 
@@ -29,54 +26,6 @@ namespace Engine.ConfigurationLoader
         {
             var graphicsSettings = _configurationDocument.XPathSelectElement("graphicsSettings");
             return ParseGraphicsSettings(graphicsSettings);
-        }
-
-        public World.World LoadWorld()
-        {
-            var world = _configurationDocument.XPathSelectElement("world");
-            return ParseWorld(world);
-        }
-
-        public TimeMachine LoadTimeMachine()
-        {
-            var timeMachine = _configurationDocument.XPathSelectElement("timeMachine");
-            return ParseTimeMachine(timeMachine);
-        }
-
-        public List<Bird.Bird> LoadBirds()
-        {
-            var birds = _configurationDocument.XPathSelectElements("birds/bird");
-            foreach (var bird in birds)
-            {
-                try
-                {  
-                    _loadedBirds.Add(ParseBird(bird));
-                }
-                catch (Exception e)
-                {
-                }
-            }
-
-            return _loadedBirds.ToList();
-        }
-
-        public List<Anomaly.Anomaly> LoadAnomalies()
-        {
-            var anomalies = _configurationDocument.XPathSelectElements("anomalies/anomaly");
-            var anomaliesList = new List<Anomaly.Anomaly>();
-
-            foreach (var anomaly in anomalies)
-            {
-                try
-                {
-                    anomaliesList.Add(ParseAnomaly(anomaly));
-                }
-                catch (Exception e)
-                {
-                }
-            }
-
-            return anomaliesList;
         }
 
         private GraphicsSettings ParseGraphicsSettings(XElement graphicsSettings)
@@ -102,12 +51,24 @@ namespace Engine.ConfigurationLoader
             return GraphicsSettingsFactory.CreateGraphicsSettings(fps, windowResolution, cameraSpeed, maxVerticalAngle, maxHorizontalAngle, cameraPosition, cameraDirection);
         }
 
+        public World.World LoadWorld()
+        {
+            var world = _configurationDocument.XPathSelectElement("world");
+            return ParseWorld(world);
+        }
+
         private World.World ParseWorld(XElement world)
         {
             var worldSize = (int)world.XPathSelectElement("worldSize");
-            var numberOfTrees = (int) world.XPathSelectElement("numberOfTrees");
+            var numberOfTrees = (int)world.XPathSelectElement("numberOfTrees");
 
             return WorldFactory.CreateWorld(worldSize, numberOfTrees);
+        }
+
+        public TimeMachine LoadTimeMachine()
+        {
+            var timeMachine = _configurationDocument.XPathSelectElement("timeMachine");
+            return ParseTimeMachine(timeMachine);
         }
 
         private Time.TimeMachine ParseTimeMachine(XElement timeMachine)
@@ -117,9 +78,26 @@ namespace Engine.ConfigurationLoader
             return TimeMachineFactory.CreateTimeMachine(quantum);
         }
 
+        public List<Bird.Bird> LoadBirds()
+        {
+            var birds = _configurationDocument.XPathSelectElements("birds/bird");
+            foreach (var bird in birds)
+            {
+                try
+                {  
+                    _loadedBirds.Add(ParseBird(bird));
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
+            return _loadedBirds.ToList();
+        }
+
         private Bird.Bird ParseBird(XElement bird)
         {
-            var name = (string) bird.XPathSelectElement("name");
+            var name = (string)bird.XPathSelectElement("name");
 
             var x = (float)bird.XPathSelectElement("position/x");
             var y = (float)bird.XPathSelectElement("position/y");
@@ -132,11 +110,37 @@ namespace Engine.ConfigurationLoader
             z = (float)bird.XPathSelectElement("direction/z");
 
             var direction = new Vector3(x, y, z);
-            
-            var statistics = ParseStatistics(bird.XPathSelectElement("statistics"));
-            var strategy = ParseStrategy(bird.XPathSelectElement("strategy"));
 
-            return BirdFactory.CreateBird(name, position, direction, statistics, strategy);
+            return BirdFactory.CreateBird(name, position, direction, StatisticsFactory.CreateStatistics(bird.XPathSelectElement("statistics")));
+        }
+
+        public void LoadStrategiesForBirds(IEnumerable<Bird.Bird> birds, StrategyFactory stratFactory )
+        {
+            foreach (var bird in birds)
+            {
+                XElement birdElement =
+                    _configurationDocument.XPathSelectElement(string.Format("//bird[name = '{0}']", bird.Id));
+                bird.Strategy = stratFactory.GetStrategy(birdElement.XPathSelectElement("strategy"));
+            }
+        }
+
+        public List<Anomaly.Anomaly> LoadAnomalies()
+        {
+            var anomalies = _configurationDocument.XPathSelectElements("anomalies/anomaly");
+            var anomaliesList = new List<Anomaly.Anomaly>();
+
+            foreach (var anomaly in anomalies)
+            {
+                try
+                {
+                    anomaliesList.Add(ParseAnomaly(anomaly));
+                }
+                catch (Exception e)
+                {
+                }
+            }
+
+            return anomaliesList;
         }
 
         private Anomaly.Anomaly ParseAnomaly(XElement anomaly)
@@ -178,17 +182,6 @@ namespace Engine.ConfigurationLoader
             }
 
             return new NoEffect();
-        }
-
-        private Statistics ParseStatistics(XElement statistics)
-        {
-            var speed = (float)statistics.XPathSelectElement("speed");
-            return StatisticsFactory.CreateStatistics(speed);
-        }
-
-        private IStrategy ParseStrategy(XElement strategy)
-        {
-            return _strategyFactory.GetStrategy(strategy);
         }
     }
 }

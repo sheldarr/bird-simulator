@@ -1,14 +1,13 @@
 ﻿using Engine.Bird;
-using Engine.Interfaces;
 using OpenTK;
 
 namespace Engine.Factories
 {
     public static class BirdFactory
     {
-        public static Bird.Bird CreateBird(string name, Vector3 position, Vector3 direction, Statistics statistics, IStrategy strategy)
+        public static Bird.Bird CreateBird(string name, Vector3 position, Vector3 direction, Statistics stats)
         {
-            return new Bird.Bird(position, direction, statistics, strategy)
+            return new Bird.Bird(position, direction, stats)
             {
                 Id = name,
             };

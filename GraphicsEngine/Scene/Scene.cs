@@ -47,7 +47,7 @@ namespace GraphicsEngine.Scene
             _worldCube = new WorldCube(_world.WorldSize * 2);
 
             _camera = new Camera.Camera(_graphicsSettings.CameraSpeed, _graphicsSettings.MaxVerticalAngle, _graphicsSettings.MaxHorizontalAngle,
-                _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection, birds.First(bird => bird._strategy.GetType() == typeof(VectorFlight)));
+                _graphicsSettings.CameraPosition, _graphicsSettings.CameraDirection, birds.First(bird => bird.Strategy.GetType() == typeof(VectorFlight)));
            
             birds.ToList().ForEach(bird => _objects.Add(new BirdModel(bird, _world.WorldSize)));
             anomalies.ToList().ForEach(anomaly => _anomalies.Add(new AnomalyModel(anomaly)));
